@@ -2,7 +2,240 @@ function setup() {
   createCanvas(400, 400);
 }
 
-function draw() {
-  background(220);
-  circle(300, 200, 50)
+function draw(){
+  background(220)
+
+
+
+//1. Mijn naam 
+ 
+fill(0)
+textSize(12);
+strokeWeight(0)
+text("Andrii", 50, 50);
+
+
+
+
+//2. Flaag 
+
+fill (174, 28, 40);
+rect(50, 75, 75, 20);
+strokeWeight(0)
+
+fill (255);
+rect(50, 95, 75, 20)
+strokeWeight(0)
+
+fill (33, 70, 139);
+rect(50, 115, 75, 20);
+strokeWeight(0)
+
+//3.Schaakbord
+
+  strokeWeight(2)
+    fill(0)
+    rect(50, 150, 25, 25)
+    fill(255)
+    rect(75, 150, 25, 25)
+    fill(0)
+    rect(100, 150, 25, 25)
+
+    fill(255)
+    rect(50, 175, 25, 25)
+    fill(0)
+    rect(75, 175, 25, 25)
+    fill(255)
+    rect(100, 175, 25, 25)
+
+    fill(0)
+    rect(50, 200, 25, 25)
+    fill(255)
+    rect(75, 200, 25, 25)
+    fill(0)
+    rect(100, 200, 25, 25)
+
+    //4. trasparant huis
+
+    noFill()
+    stroke(0)
+    strokeWeight(2)
+    triangle(50, 275, 100, 275, 75, 250);
+
+    rect(52, 275, 45, 45)
+
+
+    //5. een verkeerslicht
+
+    fill(122, 122, 122)
+    strokeWeight(0)
+    rect(175, 50, 40, 100)
+    
+    fill(122,122,122)
+    rect(185,150,20,60)
+
+    fill(224, 20, 20)
+    circle(195,70,25)
+
+    fill(204,118,12)
+    circle(195,100,25)
+
+    fill(12,204,12)
+    circle(195,130,25)
+
+
+   //6. een dobbelsteen
+
+   strokeWeight(3)
+   fill(255)
+   rect(175,250,60,60,10)
+
+   fill(0)
+   circle(190, 265, 12)
+
+   fill(0)
+   circle(205, 280, 12)
+
+   fill(0)
+   circle(220,295, 12)
+
+   //7. mario 
+   fill(0)
+   strokeWeight(0)
+   text("Mario", 250,50)
+   textSize(16)
+
+   //hat
+   fill(240, 12, 12)
+   rect(260, 65, 65,10)
+   rect(250, 75, 120,10)
+
+   //face
+   fill(133, 70, 32)
+   rect(250,85, 40, 10)
+
+   fill(232,188,160)
+   rect(290,85,60,10)
+
+   fill(0)
+   rect(340,85,10,10)
+
+   fill(232,188,160)
+   rect(240,95,130,10)
+
+   fill(0)
+   rect(340,95,10,10)
+
+   fill(232,188,160)
+   rect(240,105,140,10)
+
+   fill(0)
+   rect(350,105,10,10)
+
+   
+
+   fill(232,188,160)
+   rect(240,115,130,10)
+   rect(260,125,100,10)
+
+   fill(133, 70, 32)
+   rect(240,95, 10, 30)
+   rect(250,115, 10, 10)
+   rect(260,95, 10, 20)
+   rect(270,105, 10, 10)
+
+   fill(0)
+   rect(340,115,30,10)
+
+   //body
+
+   fill(240, 12, 12)
+   rect(250,135,90,10)
+   rect(240,145,120,10)
+   rect(230,155,140,10)
+   rect(260,165,80,10)
+
+   fill(232,188,160)
+   rect(230,165,140,10)
+   rect(230,175,140,10)
+   rect(230,185,140,10)
+
+   fill(0,9,255)
+   rect(270,135,10,60)
+   rect(270,155,60,10)
+   rect(270,165,60,10)
+   rect(310,145,10,10)
+   rect(270,175,60,10)
+   rect(260,185,80,10)
+   rect(260,195,30,10)
+   rect(310,195,30,10)
+
+   fill(128, 83, 20)
+   rect(310,205,40,10)
+   rect(310,210,50,10)
+   rect(250,205,40,10)
+   rect(240,210,50,10)
+
+   fill(255,247,8)
+   rect(310,165,10,10)
+   rect(280,165,10,10)
+
+   
+
+   //7.Golden Freddy
+    
+   fill(0)
+   textSize(12)
+   text("Golden Freddy", 180,350)
+   strokeWeight(0)
+   
+   //hat
+
+   fill(111,1,135)
+   rect(275,250,50,25)
+   rect(265,265,70,10)
+   
+
+   //head
+   fill(145,123,23)
+   rect(270,275,60,35)
+
+   //body
+   fill(145,123,23)
+   rect(265,310,60,45)
+   rect(270,350,40,10)
+
+   //arms/feets
+   fill(145,123,23)
+   rect(250,312,20,25)
+   rect(325,310,20,27)
+   rect(260,360,30,25)
+   rect(315,350,30,25)
+
+   //eyes/nose/mouth/buttons
+   fill(0)
+   rect(280,285,17,17)
+   rect(308,285,17,17)
+   rect(295,302,14,11)
+   rect(285,315,35,7)
+   rect(282,314,10,5)
+   rect(315,310,10,10)
+   rect(300,340,6,5)
+   rect(300,347,6,5)
+   
+
+   fill(255,255,255)
+   rect(289,290,6,5)
+   rect(317,291,5,4)
+
+   //bow
+   fill(111,1,135)
+   rect(280,325,15,13)
+   rect(297,326,12,10)
+   rect(311,325,13,11)
+   rect(290,328,25,5)
+
+
+
+
 }
