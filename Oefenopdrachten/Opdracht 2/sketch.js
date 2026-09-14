@@ -21,7 +21,7 @@ let aftrekken = a - b;
 let vermenigvuldigen = a * b; 
 let delen = a - b;
 
-
+// Output
 text ("Optellen: " + optellen, 20,80)
 text ("Aftreken: " + aftrekken, 20,100)
 text ("Vermenigvuldigen: " + vermenigvuldigen, 20,120)
