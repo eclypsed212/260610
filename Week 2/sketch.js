@@ -121,7 +121,7 @@ function draw() {
 
   
 
-
+text(mouseX + ", " + mouseY, 10,20)
 
 
   }
