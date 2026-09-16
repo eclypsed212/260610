@@ -1,13 +1,22 @@
+let cloud1x = 0;
+let cloud2x = 0;
+let cloud3x = 0;
+let maxDiameter 
+let speed 
+
+
 
 function setup() {
   createCanvas(800, 600);
+  maxDiameter = 150;
+  speed = 0;
 }
 
 function draw() {
 
 
   //background 
-  background(80,88,237);
+  background("darkblue");
   strokeWeight(5)
   stroke(16,61,16)
   fill(27,107,27)
@@ -29,7 +38,26 @@ function draw() {
   }
   noStroke(0)
 
+  //the moon
+  
+  
+  let diam = 100+ sin(speed) * maxDiameter
+  console.log(diam)
+  fill(255,255,255, 100)
+  ellipse(350/2,95,diam,diam )
 
+  fill(255,255,255, 150)
+  ellipse(350,95,150) 
+
+  fill(255,255,255,)
+  ellipse(350,95,105) 
+
+  speed += .02
+
+  
+
+  
+  
 
 
     //mountains 
@@ -90,22 +118,66 @@ function draw() {
     fill(25,82,21)
     circle(49+i*120 + sway1,400,50)
   }
-  //clouds
-
-
-  let cloud1x = 10;
-
+  //CLOUDS!!!!!!!
+   
+  
+  //cloud 1
+  fill(224,224,223)
+  circle(40+cloud1x,50,50)
+  circle(75+cloud1x,45,65)
+  circle(120+cloud1x,50,50)
+  cloud1x = cloud1x + 0.25
+  if(cloud1x > 810){
+    cloud1x = -100
+  }
   fill(255)
   circle(40+cloud1x,55,50)
   circle(75+cloud1x,50,65)
   circle(120+cloud1x,55,50)
-  cloud1x = cloud1x + 5 
+  cloud1x = cloud1x + 0.25
+  if(cloud1x > 810){
+    cloud1x = -100
+  }
+ 
+  //cloud2 
+
+
+  fill(224,224,223)
+  circle(250 + cloud2x,120,50)
+  circle(215 + cloud2x,120,65)
+  circle(175 + cloud2x,120,50)
+  cloud2x = cloud2x + 0.2
+  if(cloud2x > 810){
+    cloud2x = -100
+  }
 
   fill(255)
-  circle(250,125,50)
-  circle(215,125,65)
-  circle(175,125,50)
+  circle(250 + cloud2x,125,50)
+  circle(215 + cloud2x,125,65)
+  circle(175 + cloud2x,125,50)
+  cloud2x = cloud2x + 0.2
+  if(cloud2x > 810){
+    cloud2x = -320;
+  }
   
+   //cloud 3
+  fill(224,224,223)
+  circle(40+cloud3x,200,50)
+  circle(75+cloud3x,195,65)
+  circle(120+cloud3x,200,50)
+  cloud1x = cloud3x + 0.2
+  if(cloud1x > 810){
+    cloud1x = -100
+  }
+  fill(255)
+  circle(40+cloud3x,210,50)
+  circle(75+cloud3x,205,65)
+  circle(120+cloud3x,210,50)
+  cloud3x = cloud3x + 0.1
+  if(cloud3x > 810){
+    cloud3x = -100
+  }
+
   
   
   
