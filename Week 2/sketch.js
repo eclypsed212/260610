@@ -92,15 +92,19 @@ function draw() {
   }
   //clouds
 
-  fill(255)
-  circle(40,55,50)
-  circle(75,50,65)
-  circle(120,55,50)
+
+  let cloud1x = 10;
 
   fill(255)
-  circle(55,55,50)
-  circle(90,50,65)
-  circle(135,55,50)
+  circle(40+cloud1x,55,50)
+  circle(75+cloud1x,50,65)
+  circle(120+cloud1x,55,50)
+  cloud1x = cloud1x + 5 
+
+  fill(255)
+  circle(250,125,50)
+  circle(215,125,65)
+  circle(175,125,50)
   
   
   
