@@ -1,15 +1,20 @@
 let cloud1x = 0;
 let cloud2x = 0;
 let cloud3x = 0;
-let maxDiameter 
-let speed 
+let maxDiameter1
+let maxDiameter2 
+let speed1 
+let speed2 
+let carxpos1 = 0;
 
 
 
 function setup() {
   createCanvas(800, 600);
-  maxDiameter = 150;
-  speed = 0;
+  maxDiameter1 = 45;
+  maxDiameter2 = 45;
+  speed1 = 0;
+  speed2 = 0;
 }
 
 function draw() {
@@ -41,18 +46,20 @@ function draw() {
   //the moon
   
   
-  let diam = 100+ sin(speed) * maxDiameter
-  console.log(diam)
+  let diam1 = 125+ sin(speed1) * maxDiameter1
   fill(255,255,255, 100)
-  ellipse(350/2,95,diam,diam )
+  ellipse(350,95,diam1,diam1 )
 
+
+  let diam2 = 125 + sin(speed2) * maxDiameter2
   fill(255,255,255, 150)
-  ellipse(350,95,150) 
+  ellipse(350,95,diam2, diam2) 
 
   fill(255,255,255,)
   ellipse(350,95,105) 
 
-  speed += .02
+  speed1 += .03
+  speed2 += .02
 
   
 
@@ -97,18 +104,20 @@ function draw() {
 
   //trees
 
-
+  
   for(let i=0; i<4; i++){
+    noStroke(0)
     fill(92,56,3)
     rect(45 + i * 120,400,10, 85)
 
 
-
+  noStroke(0)
   for (let i =0; i<4; i++){
     let sway1 = sin(frameCount * 0.05 + i) * 10;
     let sway2 = sin(frameCount * 0.07 + i) * 10;
     let sway3 = sin(frameCount * 0.09 + i) * 10;
-
+    
+    noStroke(0)
     fill(64,173,56)
     circle(49+i*120 + sway3,400,50)
 
@@ -122,63 +131,80 @@ function draw() {
    
   
   //cloud 1
+  noStroke(0)
   fill(224,224,223)
   circle(40+cloud1x,50,50)
   circle(75+cloud1x,45,65)
   circle(120+cloud1x,50,50)
-  cloud1x = cloud1x + 0.25
+  cloud1x = cloud1x + 0.1
   if(cloud1x > 810){
-    cloud1x = -100
+    cloud1x = -150
   }
+  noStroke(0)
   fill(255)
   circle(40+cloud1x,55,50)
   circle(75+cloud1x,50,65)
   circle(120+cloud1x,55,50)
-  cloud1x = cloud1x + 0.25
+  cloud1x = cloud1x + 0.1
   if(cloud1x > 810){
-    cloud1x = -100
+    cloud1x = -150
   }
  
   //cloud2 
 
-
+   noStroke(0)
   fill(224,224,223)
   circle(250 + cloud2x,120,50)
   circle(215 + cloud2x,120,65)
   circle(175 + cloud2x,120,50)
-  cloud2x = cloud2x + 0.2
+  cloud2x = cloud2x + 0.05
   if(cloud2x > 810){
     cloud2x = -100
   }
-
+   noStroke(0)
   fill(255)
   circle(250 + cloud2x,125,50)
   circle(215 + cloud2x,125,65)
   circle(175 + cloud2x,125,50)
-  cloud2x = cloud2x + 0.2
+  cloud2x = cloud2x + 0.05
   if(cloud2x > 810){
     cloud2x = -320;
   }
   
    //cloud 3
+   noStroke(0)
   fill(224,224,223)
-  circle(40+cloud3x,200,50)
-  circle(75+cloud3x,195,65)
-  circle(120+cloud3x,200,50)
-  cloud1x = cloud3x + 0.2
-  if(cloud1x > 810){
-    cloud1x = -100
-  }
-  fill(255)
-  circle(40+cloud3x,210,50)
-  circle(75+cloud3x,205,65)
-  circle(120+cloud3x,210,50)
-  cloud3x = cloud3x + 0.1
+  circle(250+cloud3x,200,50)
+  circle(215+cloud3x,195,65)
+  circle(175+cloud3x,200,50)
+  cloud3x = cloud3x + 0.2
   if(cloud3x > 810){
-    cloud3x = -100
+    cloud3x = -150
+  }
+  noStroke(0)
+  fill(255)
+  circle(250+cloud3x,210,50)
+  circle(215+cloud3x,205,65)
+  circle(175+cloud3x,210,50)
+  cloud3x = cloud3x + 0.2
+  if(cloud3x > 810){
+    cloud3x = -150
   }
 
-  
+  //cars 
+
+  //car1
+  noStroke(0)
+  rect(55+carxpos1,470,110,50)
+  stroke(1)
+  circle(75+carxpos1,525,35)
+  circle(135+carxpos1,525,35)
+
+  carxpos1 = carxpos1 +1
+
+  if(carxpos1 > 800){
+    carxpos1 = -150
+  }
   
   
   //let auto1xpositie = 0;
