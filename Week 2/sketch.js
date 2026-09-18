@@ -8,7 +8,7 @@ let speed2
 let carxpos1 = 0;
 let carxpos2 = 0;
 let lamp = 0;
-let timer = 360; 
+let timer = 360;
 
 
 
@@ -100,37 +100,44 @@ function draw() {
   line(671, 400, 671, 500)
 
   noStroke()
-  
-  
+
+
   if (lamp == 0) {
-  fill(255, 0, 0); 
-  carxpos1 = carxpos1 + 0
-  carxpos2 = carxpos2 + 0 
-} else {
-  fill(125, 7, 7);
-}
-circle(673, 325, 30);
+    fill(255, 0, 0);
 
-if (lamp == 1) {
-  fill(255, 255, 0);
-  carxpos1 = carxpos1 + 0.5
-  carxpos2 = carxpos2 + 1
-} else {
-  fill(140, 77, 7);
-}
-circle(673, 360, 30);
+    if (carxpos1 < 430) {
+      carxpos1 = carxpos1 + 1;
+    }
 
-if (lamp == 2) {
-  fill(102, 255, 0);
-  carxpos1 = carxpos1 + 1
-  carxpos2 = carxpos2 + 2 
-} else {
-  fill(3, 69, 38);
-}
-circle(673, 395, 30);
-  
+    if (carxpos2 < 390) {
+      carxpos2 = carxpos2 + 2;
+    }
+  } else {
+    fill(125, 7, 7);
+  }
+  circle(673, 325, 30);
 
-  
+  if (lamp == 1) {
+    fill(255, 255, 0);
+    carxpos1 = carxpos1 + 0.5
+    carxpos2 = carxpos2 + 1
+  } else {
+    fill(140, 77, 7);
+  }
+  circle(673, 360, 30);
+
+  if (lamp == 2) {
+    fill(102, 255, 0);
+
+    carxpos1 = carxpos1 + 1;
+    carxpos2 = carxpos2 + 2;
+  } else {
+    fill(3, 69, 38);
+  }
+  circle(673, 395, 30);
+
+
+
 
   //trees
 
@@ -238,23 +245,22 @@ circle(673, 395, 30);
 
   }
 
-     //car2
+  //car2
 
-      noStroke(0)
-    fill("red")
-    rect(210 + carxpos1, 520, 170, 25)
-    rect(225 + carxpos1, 500, 100, 25)
-    stroke(1)
-    fill("grey")
-    circle(210 + carxpos1, 545, 35)
-    circle(345 + carxpos1, 545, 35)
+  noStroke(0)
+  fill("red")
+  rect(210 + carxpos2, 520, 170, 25)
+  rect(225 + carxpos2, 500, 100, 25)
+  stroke(1)
+  fill("grey")
+  circle(210 + carxpos2, 545, 35)
+  circle(345 + carxpos2, 545, 35)
 
-    
 
-    if (carxpos2 > 800) {
-      carxpos2 = -150
-    }
-     
+  if (carxpos2 > 800) {
+    carxpos2 = -350
+  }
+
 
 
 
@@ -262,14 +268,14 @@ circle(673, 395, 30);
 
 }
 function keyPressed() {
-    if (keyCode === 32) {
-      console.log(lamp)
-      lamp++
-      if(lamp>2){
-        lamp = 0
-      }
+  if (keyCode === 32) {
+    console.log(lamp)
+    lamp++
+    if (lamp > 2) {
+      lamp = 0
     }
   }
+}
 
 
 
