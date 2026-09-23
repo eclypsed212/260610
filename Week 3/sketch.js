@@ -3,8 +3,9 @@
 let buttons = [];
 let board = [];
 let currentPlayer = "red"
-let playerwins = 0;
-
+let gameOver = false;
+let gameStarted = false;
+let gameRestart = false;
 function setup() {
 
 
@@ -12,7 +13,34 @@ function setup() {
 
   
   createCanvas(800, 800);
-  let resetbutton = createButton("reset")
+//start button
+  let startbutton = createButton("Start")
+  startbutton.position(390,75)
+  startbutton.style("border-radius", "10px")
+  startbutton.style("width", '115px')
+  startbutton.style("height", "75px")
+  startbutton.style("background", "green")
+  startbutton.style("font-size", "18px")
+  startbutton.style.fontFamily = 'Arial'
+  
+  startbutton.mousePressed(function(){
+    gameStarted = true;
+  })
+  
+//restart
+  let restartbutton = createButton("Restart")
+  restartbutton.position(390, 750)
+   restartbutton.style("border-radius", "10px")
+   restartbutton.style("width", '115px')
+   restartbutton.style("height", "75px")
+   restartbutton.style("background", "red")
+   restartbutton.style("font-size", "18px")
+
+   restartbutton.mousePressed(function(){
+    gameRestart = true;
+    
+   })
+  
 
   for (let i = 0; i < 9; i++) {
     board.push("")
@@ -44,6 +72,12 @@ function setup() {
       });
 
       button.mousePressed(function () {
+        if (gameStarted == false){
+          return
+        }
+        if(gameOver == true){
+          return
+        }
         if (board[index] == "") {
           board[index] = currentPlayer;
 
@@ -83,6 +117,7 @@ function checkVictory() {
   if (board[0] == board[1] &&
     board[1] == board[2] &&
     board[0] != "") {
+      gameOver = true;
     if (board[0] == "red") {
       console.log("Red wins!")
     } else {
@@ -93,6 +128,7 @@ function checkVictory() {
   if (board[3] == board[4] &&
     board[4] == board[5] &&
     board[5] != "") {
+      gameOver= true;
     if (board[3] == "red") {
       console.log("Red wins!")
     } else {
@@ -102,6 +138,7 @@ function checkVictory() {
   if (board[6] == board[7] &&
     board[7] == board[8] &&
     board[8] != "") {
+      gameOver = true
     if (board[6] == "red") {
       console.log("Red wins!")
     } else {
@@ -114,6 +151,7 @@ function checkVictory() {
   if (board[0] == board[3] &&
     board[3] == board[6] &&
     board[6] != "") {
+      gameOver = true
     if (board[0] == "red") {
       console.log("Red wins!")
     } else {
@@ -123,6 +161,7 @@ function checkVictory() {
   if (board[1] == board[4] &&
     board[4] == board[7] &&
     board[7] != "") {
+      gameOver = true;
     if (board[1] == "red") {
       console.log("Red wins!")
     } else {
@@ -132,6 +171,7 @@ function checkVictory() {
   if (board[2] == board[5] &&
     board[5] == board[8] &&
     board[8] != "") {
+      gameOver = true;
     if (board[2] == "red") {
       console.log("Red wins!")
     } else {
@@ -142,7 +182,8 @@ function checkVictory() {
 
   if (board[0] == board[4] &&
     board[4] == board[8] &&
-    board[8] == "") {
+    board[8] != "") {
+      gameOver = true;
     if (board[0] == "red") {
       console.log("Red wins!")
     } else {
@@ -153,6 +194,7 @@ function checkVictory() {
   if (board[2] == board[4] &&
     board[4] == board[6] &&
     board[6] != "") {
+      gameOver = true;
     if (board[2] == "red") {
       console.log("Red wins!")
     } else {
