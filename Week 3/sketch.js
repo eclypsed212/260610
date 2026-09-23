@@ -3,11 +3,18 @@
 let buttons = [];
 let board = [];
 let currentPlayer = "red"
-
+let playerwins = 0;
 
 function setup() {
+
+
+
+
+  
   createCanvas(800, 800);
-  for (let i = 0; i < 9; i++){
+  let resetbutton = createButton("reset")
+
+  for (let i = 0; i < 9; i++) {
     board.push("")
   }
 
@@ -37,21 +44,23 @@ function setup() {
       });
 
       button.mousePressed(function () {
-        if (board[index] == ""){
+        if (board[index] == "") {
           board[index] = currentPlayer;
 
-        if (currentPlayer == "red"){
-          button.style("background" ,"red")
-        }else{
-          button.style("background", "blue")
+          if (currentPlayer == "red") {
+            button.style("background", "red")
+          } else {
+            button.style("background", "blue")
+          }
+          if (currentPlayer == "red") {
+            currentPlayer = "blue"
+          } else {
+            currentPlayer = "red"
+          }
+          console.log(board);
+          checkVictory();
         }
-        if(currentPlayer == "red"){
-          currentPlayer = "blue"
-        }else{
-          currentPlayer = "red"        
-        }
-        console.log(board);
-        }
+
       })
     }
 
@@ -64,13 +73,97 @@ function setup() {
       button.style("transform", "scale(1)");
     }
   };
+
+
 }
+function checkVictory() {
+
+  //horizantal
+
+  if (board[0] == board[1] &&
+    board[1] == board[2] &&
+    board[0] != "") {
+    if (board[0] == "red") {
+      console.log("Red wins!")
+    } else {
+      console.log("Blue wins!")
+    }
+  }
+
+  if (board[3] == board[4] &&
+    board[4] == board[5] &&
+    board[5] != "") {
+    if (board[3] == "red") {
+      console.log("Red wins!")
+    } else {
+      console.log("Blue wins!")
+    }
+  }
+  if (board[6] == board[7] &&
+    board[7] == board[8] &&
+    board[8] != "") {
+    if (board[6] == "red") {
+      console.log("Red wins!")
+    } else {
+      console.log("Blue wins!")
+    }
+  }
+
+  //vertical
+
+  if (board[0] == board[3] &&
+    board[3] == board[6] &&
+    board[6] != "") {
+    if (board[0] == "red") {
+      console.log("Red wins!")
+    } else {
+      console.log("Blue wins!")
+    }
+  }
+  if (board[1] == board[4] &&
+    board[4] == board[7] &&
+    board[7] != "") {
+    if (board[1] == "red") {
+      console.log("Red wins!")
+    } else {
+      console.log("Blue wins!")
+    }
+  }
+  if (board[2] == board[5] &&
+    board[5] == board[8] &&
+    board[8] != "") {
+    if (board[2] == "red") {
+      console.log("Red wins!")
+    } else {
+      console.log("Blue wins!")
+    }
+  }
+  //diagonal 
+
+  if (board[0] == board[4] &&
+    board[4] == board[8] &&
+    board[8] == "") {
+    if (board[0] == "red") {
+      console.log("Red wins!")
+    } else {
+      console.log("Blue wins!")
+    }
+  }
+
+  if (board[2] == board[4] &&
+    board[4] == board[6] &&
+    board[6] != "") {
+    if (board[2] == "red") {
+      console.log("Red wins!")
+    } else {
+      console.log("Blue wins!")
+    }
+
+  }
+  
 
 
-//victory check data
-
-
-
+}
 function draw() {
   background(220);
 
