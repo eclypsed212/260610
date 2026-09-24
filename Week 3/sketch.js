@@ -59,8 +59,8 @@ function setup() {
     currentPlayer = "red";
     gameOver = false;
     gameStarted = false;
-    winner="";
-    
+    winner = "";
+
 
     for (let button of buttons) {
       button.style("background-color", "#8c8c8c")
@@ -151,21 +151,21 @@ function checkVictory() {
   if (board[0] == board[1] &&
     board[1] == board[2] &&
     board[0] != "") {
-      winner = board[0];
-      gameOver = true;
-    }
+    winner = board[0];
+    gameOver = true;
+  }
 
   if (board[3] == board[4] &&
     board[4] == board[5] &&
     board[5] != "") {
     winner = board[3];
-      gameOver = true;
+    gameOver = true;
   }
   if (board[6] == board[7] &&
     board[7] == board[8] &&
     board[8] != "") {
     winner = board[6];
-      gameOver = true;
+    gameOver = true;
   }
 
   //vertical combination 
@@ -174,20 +174,20 @@ function checkVictory() {
     board[3] == board[6] &&
     board[6] != "") {
     winner = board[0];
-      gameOver = true;
-    }
-  
+    gameOver = true;
+  }
+
   if (board[1] == board[4] &&
     board[4] == board[7] &&
     board[7] != "") {
     winner = board[1];
-      gameOver = true;
+    gameOver = true;
   }
   if (board[2] == board[5] &&
     board[5] == board[8] &&
     board[8] != "") {
     winner = board[2];
-      gameOver = true;
+    gameOver = true;
   }
   //diagonal combination 
 
@@ -195,55 +195,61 @@ function checkVictory() {
     board[4] == board[8] &&
     board[8] != "") {
     winner = board[0];
-      gameOver = true;
-    }
-  
+    gameOver = true;
+  }
+
 
   if (board[2] == board[4] &&
     board[4] == board[6] &&
     board[6] != "") {
     winner = board[2];
-      gameOver = true;
+    gameOver = true;
   }
 }
 
 function draw() {
-  
+
   background(220);
 
-   fill(0)
-   rect(210, 210, 400, 400, 25)
-  
-  if(gameStarted==false){
+  if (gameStarted == false) {
     background("white")
-    return
+    
   }
 
-  else if(currentPlayer == "red"){
+  else if (currentPlayer == "red") {
     background("red")
-  }else {
+  } else {
     background("blue")
   }
 
-  // player queue
-  if(currentPlayer == "red"){
-    textSize(25)
-    text("Red turns", 50,50)
+  fill(0)
+  rect(210, 210, 400, 400, 25)
+
+
+  if (gameStarted == false) {
     
-  }else{
+    return
+  }
+
+  // player queue
+  if (currentPlayer == "red") {
     textSize(25)
-    text("Blue turns",50,50)
+    text("Red turns", 50, 50)
+
+  } else {
+    textSize(25)
+    text("Blue turns", 50, 50)
   }
   //text who win 
-  if(winner == "red"){
+  if (winner == "red") {
     textSize(30);
-    text("Red wins", 50,100)
+    text("Red wins", 50, 100)
   }
-  if(winner == "blue"){
+  if (winner == "blue") {
     textSize(30);
-    text("Blue wins", 50,100)
+    text("Blue wins", 50, 100)
   }
-  
+
 
 }
 
