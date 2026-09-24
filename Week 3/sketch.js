@@ -104,10 +104,10 @@ function setup() {
       //function of start button 
       button.mousePressed(function () {
         if (gameStarted == false) {
-          return
+          return //stop the function
         }
         if (gameOver == true) {
-          return
+          return //stop the function 
         }
 
 
@@ -147,7 +147,7 @@ function setup() {
 }
 function checkVictory() {
 
-  //horizantal
+  //horizantal combination
   if (board[0] == board[1] &&
     board[1] == board[2] &&
     board[0] != "") {
@@ -168,7 +168,7 @@ function checkVictory() {
       gameOver = true;
   }
 
-  //vertical
+  //vertical combination 
 
   if (board[0] == board[3] &&
     board[3] == board[6] &&
@@ -189,7 +189,7 @@ function checkVictory() {
     winner = board[2];
       gameOver = true;
   }
-  //diagonal 
+  //diagonal combination 
 
   if (board[0] == board[4] &&
     board[4] == board[8] &&
@@ -225,7 +225,7 @@ function draw() {
     background("blue")
   }
 
-
+  // player queue
   if(currentPlayer == "red"){
     textSize(25)
     text("Red turns", 50,50)
@@ -234,6 +234,7 @@ function draw() {
     textSize(25)
     text("Blue turns",50,50)
   }
+  //text who win 
   if(winner == "red"){
     textSize(30);
     text("Red wins", 50,100)
