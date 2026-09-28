@@ -1,24 +1,24 @@
+
+
+
+
 function setup() {
   createCanvas(400, 400);
+
+  
 }
 
 function draw() {
   background(220);
-  
-  let a = random (100);
-  let b = prompt("Write number") ;
+  let index = 0;
 
-  
 
-  if ( a < b ){
-    console.log(a, " is kleiner dan", b)
-  }
-  if (a > b){
-    console.log(a, "is grooter dan", b)
 
-  }
-  if (a == b){
-    console.log( a, "is gelijk aan", b)
+  while(index < 5){
+    rect(50 +(index * 50), 50,50,50)
+    index++;
   }
   
+
+
 }
