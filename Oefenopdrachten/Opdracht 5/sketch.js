@@ -38,6 +38,7 @@ text("3.", 80, 65);
 
 let x = 80;
 
+<<<<<<< Updated upstream
 for (let i = 0; i < 4; i++) {
   let green = i * 85;
   let width = 30 + i * 30;
@@ -46,6 +47,10 @@ for (let i = 0; i < 4; i++) {
   rect(x,80,width,40);
 
   x = x + width
+=======
+  rect(80+(i*20),80,20+(i*20),40)
+  fill(0,green,0)
+>>>>>>> Stashed changes
 }
 
 
