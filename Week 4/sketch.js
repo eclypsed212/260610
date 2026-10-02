@@ -24,7 +24,7 @@ let triangleSizePos =[]
 let triangleColors = []
 
 //sound variable
-let clickSound;
+//let clickSound;
 
 
 //download the sound of bubbles
