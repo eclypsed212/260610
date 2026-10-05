@@ -33,6 +33,35 @@ function drawText(x,y,color,message, size){
   
 }
 
+function sum(a,b){
+  return a + b
+  
+}
+function divide(a,b){
+  return a/b
+}
+function multy(a,b){
+  return a * b
+}
+function minus(a,b){
+  return a - b
+}
+
+let subtract = minus (50,30)
+console.log(subtract)
+
+let multiply = multy(10,2)
+console.log(multiply)
+
+
+let delen = divide(50,10)
+console.log(delen)
+
+
+
+let result = sum(10,5)
+console.log(result)
+
 
 function draw() {
   background(220);
@@ -40,7 +69,7 @@ function draw() {
   drawCircle(50,175,50)
   drawRectAngle(75,150,50,50)
   drawLine(30,275,85,275)
-  drawText(
+  drawText(15,300,"red","Hello world!",15)
 }
 
 
