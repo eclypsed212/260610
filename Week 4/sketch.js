@@ -24,7 +24,7 @@ let triangleSizePos =[]
 let triangleColors = []
 
 //sound variable
-let clickSound;
+//let clickSound;
 
 
 //download the sound of bubbles
@@ -108,24 +108,25 @@ function draw() {
     noStroke();
     push();
     translate(SquareXpos[i], SquareYpos[i]); // move the position of coordinate axis 
-    rotate(frameCount * 0.01);
-    rectMode(CENTER);
-    rect(0, 0, size, size);
-    pop();
+    rotate(frameCount * 0.01); // rotate the coordinate of axis and 0.01 speed of rotation 
+    rectMode(CENTER);  //makes the position the center of the square 
+    rect(0, 0, size, size); //create the squares 
+    pop();// restores the previous drawing state 
   }
 
   //triangles
   for (let i = 0; i < 100; i++){
 
 
-     triangleYpos[i]= triangleYpos[i] + random(2,2)
+     triangleYpos[i]= triangleYpos[i] + random(2,2) // movement of triangels (but you can also write +2 )
 
-     if (triangleYpos[i] > 600){
+     if (triangleYpos[i] > 600){ //return to position when triangles cross borders of Canvas 
       triangleYpos[i] = -50
      }
 
 
     fill(triangleColors[i])
+    // We create the three points of the triangle relative to its position
     triangle(triangleXpos[i],triangleYpos[i] - triangleSizePos[i], 
       triangleXpos[i] -triangleSizePos[i],triangleYpos[i]+triangleSizePos[i],
       triangleXpos[i]+triangleSizePos[i],triangleYpos[i]+triangleSizePos[i])
@@ -136,17 +137,16 @@ function draw() {
 
   
 }
-function mouseClicked() {
+function mouseClicked() { // mouse click 
   if (mouseButton === LEFT) {
-    clickSound.play()
     for (let i = Xpos.length - 1; i >= 0; i--) {
-      let distance = dist(mouseX, mouseY, Xpos[i], Ypos[i]);
-      if (distance < SizePos[i] / 2) {
-        clickSound.play()
-        Xpos.splice(i, 1);
-        Ypos.splice(i, 1);
-        SizePos.splice(i, 1);
-        colors.splice(i, 1);
+      let distance = dist(mouseX, mouseY, Xpos[i], Ypos[i]); // count the disctance form  mouse position to the centre of circle
+      if (distance < SizePos[i] / 2) { // check if you click throught the circle
+        clickSound.play() // when you click you listen a buble sound effect
+        Xpos.splice(i, 1); // delete the circle
+        Ypos.splice(i, 1); // delete the circle
+        SizePos.splice(i, 1);// delete the circle
+        colors.splice(i, 1);// delete the circle
       }
     }
   }
