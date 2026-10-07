@@ -2,6 +2,12 @@ let score = 0;
 let currentQuestion = 0;
 let screen = "start"
 
+
+
+function preload(){
+  myFont = loadFont("./fonts/LexendGiga-VariableFont_wght.ttf")
+}
+
 let questions = [
   //easy level
   {
@@ -215,10 +221,32 @@ let questions = [
 
 ]
 
+function drawStartScreen(){
+
+  textAlign(CENTER)
+  textSize(50)
+  text("PC Quiz", width / 2, 150)
+
+  textSize(25)
+  text("Test your knowledge",)
+
+  rect(300,350,200,70,10)
+  fill(255)
+
+  let startButton = createButton("Start")
+  startButton.position(300, 350)
+  startButton.style("background", "white")
+  startButton.style("border-radius", "10px")
+  startButton.style("width", "200px")
+  startButton.style("height", "70px")
+
+}
+
 
 
 function setup() {
-  createCanvas(800, 600);
+  createCanvas(890, 600);
+  textFont(myFont)
 }
 
 function drawQuestion(){
@@ -228,25 +256,25 @@ function drawQuestion(){
   text(question.question, 50,100)
 
   for (let i = 0; i < 4; i++){
-    let anwerY = 200 + i * 80 
-    rect(50,anwerY,700,60)
-    text(question.answer[i], 70, anwerY + 38)
+    let answerY = 200 + i * 80 
+    rect(50,answerY,700,60,5)
+    text(question.answer[i], 70, answerY + 38)
   }
 }
 
 function draw() {
   background(220);
-
   drawQuestion()
+  drawStartScreen()
 }
 
 function mousePressed(){
   for (let i = 0; i < 4; i++){
-    let anwerY = 200 + i * 80
+    let answerY = 200 + i * 80
 
 
 
-    if (mouseX > 50 && mouseX < 750 && mouseY > anwerY && mouseY < anwerY + 60){
+    if (mouseX > 50 && mouseX < 750 && mouseY > answerY && mouseY < answerY + 60){
       if (i === questions[currentQuestion].correct){
         score++;
       }
