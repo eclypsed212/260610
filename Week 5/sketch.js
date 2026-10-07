@@ -1,22 +1,27 @@
 let score = 0;
 let currentQuestion = 0;
 let screen = "start"
+let startButton
 
 
 
-function preload(){
+
+//download the font for the quiz 
+function preload() {
   myFont = loadFont("./fonts/LexendGiga-VariableFont_wght.ttf")
 }
 
+
+// make array with objects (questions)
 let questions = [
   //easy level
   {
     difficulty: "easy",
-    question:"What is the main role of a graphics card (GPU)?",
-    answer: [ 
-      "Process graphics and images", 
-      "Store files", 
-      "Control the keyboard", 
+    question: "What is the main role of a graphics card (GPU)?",
+    answer: [
+      "Process graphics and images",
+      "Store files",
+      "Control the keyboard",
       "Power the computer",
     ],
     correct: 0
@@ -24,11 +29,11 @@ let questions = [
 
   {
     difficulty: "easy",
-    question:"What is the main function of a processor(CPU)",
-    answer: [ 
-      "Process instructions and data", 
-      "Store files", 
-      "Display images", 
+    question: "What is the main function of a processor(CPU)",
+    answer: [
+      "Process instructions and data",
+      "Store files",
+      "Display images",
       "Provide electricity",
     ],
     correct: 0
@@ -37,8 +42,8 @@ let questions = [
 
   {
     difficulty: "easy",
-    question:"What is RAM used for?",
-    answer:[
+    question: "What is RAM used for?",
+    answer: [
       "Temporary storage for running programs",
       "Permanent file storage",
       "Cooling the CPU",
@@ -48,47 +53,47 @@ let questions = [
   },
 
   {
-   difficulty: "easy",
-   question:"Which component is used to store files permanently?",
-   answer:[
-    "RAM",
-    "CPU",
-    "SSD",
-    "GPU",
-   ],
-   correct:2
+    difficulty: "easy",
+    question: "Which component is used to store files permanently?",
+    answer: [
+      "RAM",
+      "CPU",
+      "SSD",
+      "GPU",
+    ],
+    correct: 2
   },
 
   {
     difficulty: "easy",
-    question:"What does PSU stand for?",
-    answer:[ 
+    question: "What does PSU stand for?",
+    answer: [
       "Personal Storage Unit",
       "Processing System Unit",
       "Power Supply Unit",
       "Power System Utility",
-      
+
     ],
-    correct:2
+    correct: 2
   },
 
   //medium level
   {
     difficulty: "medium",
-    question:"What is the main purpose of a motherboard?",
-    answer:[ 
+    question: "What is the main purpose of a motherboard?",
+    answer: [
       "Cooling the system",
       "Store all files",
       "Process graphics",
       "Connect and allow communication between components",
     ],
-    correct:3
+    correct: 3
   },
 
   {
     difficulty: "medium",
-    question:"What is the main purpose of a CPU cache?",
-    answer:[ 
+    question: "What is the main purpose of a CPU cache?",
+    answer: [
       "To permanently store personal files",
       "To give the CPU faster access to frequently used data",
       "Provides more video memory",
@@ -97,10 +102,10 @@ let questions = [
     correct: 1
   },
 
-   {
+  {
     difficulty: "medium",
-    question:"What is the main advantage of an SSD over an HDD?",
-    answer:[ 
+    question: "What is the main advantage of an SSD over an HDD?",
+    answer: [
       "It is usually smaller in size",
       "It always has more storage",
       "It is usually faster",
@@ -111,45 +116,45 @@ let questions = [
 
   {
     difficulty: "medium",
-    question:"Why does a gaming PC need a good GPU?",
-    answer:[ 
+    question: "Why does a gaming PC need a good GPU?",
+    answer: [
       "To provide electricity to the CPU",
       "To store game files permanently",
       "To increase the monitor's refresh rate (Hz)",
       "To render graphics and images efficiently",
     ],
-    correct:3
+    correct: 3
   },
 
   {
     difficulty: "medium",
-    question:"What can happen if a computer does not have enough RAM?",
-    answer:[ 
+    question: "What can happen if a computer does not have enough RAM?",
+    answer: [
       "It slows down the Wi-Fi speed",
       "The use of SSD storage is beginning",
       "The GPU becomes physically hotter immediately",
       "Programs can become slower",
     ],
-    correct:3
+    correct: 3
   },
 
   //hard
   {
     difficulty: "hard",
-    question:"What is the main difference between CPU and GPU?",
-    answer:[
+    question: "What is the main difference between CPU and GPU?",
+    answer: [
       "CPU stores files, while a GPU stores programs",
       "CPU is designed for general processing, while a GPU is optimized for parallel graphics processing",
       "CPU provides power, while a GPU provides cooling",
       "A CPU connects to the internet, while a GPU controls USB devices",
     ],
-    correct:1
+    correct: 1
   },
 
-   {
+  {
     difficulty: "hard",
-    question:"Why can faster RAM improve computer performance?",
-    answer:[
+    question: "Why can faster RAM improve computer performance?",
+    answer: [
       "It increases the storage capacity of an SSD",
       "It increases the physical size of the CPU",
       "It replaces the graphics card",
@@ -158,46 +163,46 @@ let questions = [
     correct: 3
   },
 
-   {
+  {
     difficulty: "hard",
-    question:"What can happen to CPU performance when it becomes too hot?",
-    answer:[
+    question: "What can happen to CPU performance when it becomes too hot?",
+    answer: [
       "The CPU can reduce its speed to lower its temperature",
       "The computer might shut down",
       "The GPU becomes faster",
       "The RAM turns into permanent storage",
     ],
-    correct:0
+    correct: 0
   },
 
-   {
+  {
     difficulty: "hard",
-    question:"Why is a powerful PSU important when building a gaming PC?",
-    answer:[
+    question: "Why is a powerful PSU important when building a gaming PC?",
+    answer: [
       "It must provide enough stable power for all components",
       "It makes all components automatically work faster",
       "It makes the CPU physically larger",
       "It replaces the motherboard",
     ],
-    correct:0
+    correct: 0
   },
 
-   {
+  {
     difficulty: "hard",
-    question:"What is a major advantage of having a CPU with multiple cores?",
-    answer:[
+    question: "What is a major advantage of having a CPU with multiple cores?",
+    answer: [
       "It can handle multiple tasks more efficiently",
       "It automatically doubles the storage capacity",
       "It makes the GPU unnecessary",
       "Boosts FPS",
     ],
-    correct:0
+    correct: 0
   },
 
   {
-    difficulty:"extreme hard",
-    question:"What does computer lighting do?",
-    answer:[
+    difficulty: "extreme hard",
+    question: "What does computer lighting do?",
+    answer: [
       "Cool down",
       "Gives more FPS",
       "For beauty",
@@ -207,78 +212,116 @@ let questions = [
   },
 
   {
-    difficulty:"extreme hard",
+    difficulty: "extreme hard",
     question: "What fluid is used for water cooling?",
-    answer:[
+    answer: [
       "Alcohol",
       "Coolant",
       "Water",
       "Novec(Dry Water)",
 
     ],
-    correct:1
+    correct: 1
   }
 
 ]
 
-function drawStartScreen(){
+//function for drawing Startscreen
+function drawStartScreen() {
 
-  textAlign(CENTER)
+
+  textAlign(CENTER) // place the text between the coordination of text
   textSize(50)
   text("PC Quiz", width / 2, 150)
 
   textSize(25)
-  text("Test your knowledge",)
+  text("Test your knowledge", width / 2, 220)
 
-  rect(300,350,200,70,10)
-  fill(255)
+  textAlign(LEFT)
+}
 
-  let startButton = createButton("Start")
+//function for drawing the EndScreen
+function drawEndScreen() {
+
+  textAlign(CENTER)
+
+  textSize(25)
+  text("Quiz finished", width / 2, 150)
+
+  textSize(30)
+  text("Your score" + score + "/" + questions.length, width / 2, 250) //total scores in Endscreen
+
+  textAlign(LEFT)
+}
+ 
+//function for hide the startbutton after click 
+function startQuiz() {
+  screen = "quiz"
+  startButton.hide()
+}
+
+
+
+function setup() {
+  //create the startbutton 
+  createCanvas(890, 600);
+  textFont(myFont)
+  startButton = createButton("Start")
   startButton.position(300, 350)
   startButton.style("background", "white")
   startButton.style("border-radius", "10px")
   startButton.style("width", "200px")
   startButton.style("height", "70px")
 
+  startButton.mousePressed(startQuiz) // if you pressed the button the quiz will start 
 }
 
-
-
-function setup() {
-  createCanvas(890, 600);
-  textFont(myFont)
-}
-
-function drawQuestion(){
+//function for drawing questions and also answers
+function drawQuestion() {
   let question = questions[currentQuestion]
-
+  textAlign(LEFT)
   textSize(25)
-  text(question.question, 50,100)
+  text(question.question, 50, 100)
 
-  for (let i = 0; i < 4; i++){
-    let answerY = 200 + i * 80 
-    rect(50,answerY,700,60,5)
-    text(question.answer[i], 70, answerY + 38)
+  for (let i = 0; i < 4; i++) { // for loop with anwers 
+    let answerY = 200 + i * 80
+    rect(50, answerY, 700, 60, 5)
+    text(question.answer[i], 70, answerY + 38) // take one question from our array 
   }
 }
 
 function draw() {
-  background(220);
-  drawQuestion()
-  drawStartScreen()
+  background("gray");
+  if (screen === "start") {
+    drawStartScreen()
+  }
+  if (screen === "quiz") {
+    drawQuestion()
+  }
+
+  if (screen === "end") {
+    drawEndScreen()
+  }
+
+
 }
 
-function mousePressed(){
-  for (let i = 0; i < 4; i++){
+function mousePressed() {
+  for (let i = 0; i < 4; i++) {
     let answerY = 200 + i * 80
-
-
-
-    if (mouseX > 50 && mouseX < 750 && mouseY > answerY && mouseY < answerY + 60){
-      if (i === questions[currentQuestion].correct){
+    if (mouseX > 50 && mouseX < 750 && mouseY > answerY && mouseY < answerY + 60) { //check the mouse position for choosing the answer
+      if (i === questions[currentQuestion].correct) {
         score++;
       }
       currentQuestion++;
+
+      if (currentQuestion >= questions.length) { // if statement (if the questions is finished, show the end screen with results)
+        screen = "end"
+      }
+
+
+
     }
   }
 }
+
