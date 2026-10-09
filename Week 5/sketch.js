@@ -136,7 +136,7 @@ let questions = [
     question: "What is the main difference between CPU and GPU?",
     answer: [
       "CPU stores files, while a GPU stores programs",
-      "CPU is designed for general processing, while a GPU is optimized for parallel graphics processing",
+      "CPU handles general tasks, while GPU processes graphics.",
       "CPU provides power, while a GPU provides cooling",
       "A CPU connects to the internet, while a GPU controls USB devices",
     ],
@@ -238,6 +238,16 @@ function drawEndScreen() {
 }
 
 //function for hide the start button after click
+function restartQuiz(){
+  score = 0;
+  currentQuestion = 0;
+  timeLeft = 15
+  shuffleQuestion()
+  screen = "quiz"
+  restartButton.hide()
+}
+
+
 function startQuiz() {
   timeLeft = 15;
   shuffleQuestion();
@@ -271,11 +281,14 @@ function setup() {
 
   restartButton = createButton("Restart")
   restartButton.position(345,350)
-  restartButton.size(25)
-  restartButton.style("background")
-  restartButton.style()
-  restartButton.style()
-  restartButton.style()
+  restartButton.size(200,70)
+  restartButton.style("background","white")
+  restartButton.style("border-radius", "10px")
+  restartButton.style("font-family", "Lexend Giga")
+  
+
+  restartButton.mousePressed(restartQuiz);
+  restartButton.hide()
 }
 
 
@@ -293,7 +306,17 @@ function drawQuestion() {
     rect(50, answerY, 700, 60, 5);
     fill("white");
     stroke("white");
-    text(question.answer[i], 70, answerY + 38); // take one question from our array
+
+    let answerText = question.answer[i]
+
+    if(answerText.length > 55){
+      textSize(13)
+    }else if ( answerText.length > 35){
+      textSize(15)
+    }else {
+       textSize(18)
+    }
+    text(answerText, 70, answerY + 38); // take one question from our array
   }
   timeLeft -= deltaTime / 1000;
 
@@ -303,6 +326,7 @@ function drawQuestion() {
 
     if (currentQuestion >= questions.length) {
       screen = "end";
+      
     } else {
       timeLeft = 15;
     }
@@ -326,6 +350,7 @@ function draw() {
 
   if (screen === "end") {
     drawEndScreen();
+    restartButton.show()
   }
 }
 
@@ -343,6 +368,12 @@ function mousePressed() {
         score++;
       }
       currentQuestion++;
+      timeLeft = 15;
+
+      if(currentQuestion >= questions.length){
+        screen = "end"
+      }
+      break
     }
   }
 }
