@@ -212,6 +212,31 @@ let questions = [
 ];
 
 //function for drawing Start screen
+
+function drawBackground(){
+  background(bg)
+  
+  noStroke()
+  fill(5,8,20,175)
+  rect(0,0, width,height)
+
+  stroke(30,100,255,35)
+  strokeWeight(1)
+
+  for( let x = 0; x <width; x += 40){
+    line(x, 0, x, height)
+  }
+  for(let y = 0; y < height; y += 40){
+    line(0,y,width,y)
+  }
+  noStroke()
+
+  let glowSize = 180 + sin(frameCount * 0.03) * 25
+  fill(0,100,255,20)
+  ellipse(width - 100,100,glowSize,glowSize)
+}
+
+
 function drawStartScreen() {
   textAlign(CENTER); // place the text between the coordination of text
   textSize(50);
@@ -340,7 +365,7 @@ function drawQuestion() {
 }
 
 function draw() {
-  background(bg);
+  drawBackground()
   if (screen === "start") {
     drawStartScreen();
   }
