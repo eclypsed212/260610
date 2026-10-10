@@ -157,7 +157,7 @@ let questions = [
 
   {
     difficulty: "hard",
-    question: "What can happen to CPU performance when it becomes too hot?",
+    question: "How does overheating affect CPU prefomence?",
     answer: [
       "The CPU can reduce its speed to lower its temperature",
       "The computer might shut down",
@@ -169,7 +169,7 @@ let questions = [
 
   {
     difficulty: "hard",
-    question: "Why is a powerful PSU important when building a gaming PC?",
+    question: "Why does a gaming PC need a powerful PSU?",
     answer: [
       "It must provide enough stable power for all components",
       "It makes all components automatically work faster",
@@ -213,27 +213,27 @@ let questions = [
 
 //function for drawing Start screen
 
-function drawBackground(){
+function drawBackground() {
   background(bg)
-  
-  noStroke()
-  fill(5,8,20,175)
-  rect(0,0, width,height)
 
-  stroke(30,100,255,35)
+  noStroke()
+  fill(5, 8, 20, 175)
+  rect(0, 0, width, height)
+
+  stroke(30, 100, 255, 35)
   strokeWeight(1)
 
-  for( let x = 0; x <width; x += 40){
+  for (let x = 0; x < width; x += 40) {
     line(x, 0, x, height)
   }
-  for(let y = 0; y < height; y += 40){
-    line(0,y,width,y)
+  for (let y = 0; y < height; y += 40) {
+    line(0, y, width, y)
   }
   noStroke()
 
   let glowSize = 180 + sin(frameCount * 0.03) * 25
-  fill(0,100,255,20)
-  ellipse(width - 100,100,glowSize,glowSize)
+  fill(0, 100, 255, 20)
+  //ellipse(width - 100, 100, glowSize, glowSize)
 }
 
 
@@ -253,9 +253,10 @@ function drawStartScreen() {
 function drawEndScreen() {
   textAlign(CENTER);
 
+  fill (255)
   textSize(25);
   text("Quiz finished", width / 2, 150);
-
+  fill(255) 
   textSize(30);
   text("Your score" + score + "/" + questions.length, width / 2, 250); //total scores in Endscreen
 
@@ -263,7 +264,7 @@ function drawEndScreen() {
 }
 
 //function for hide the start button after click
-function restartQuiz(){
+function restartQuiz() {
   score = 0;
   currentQuestion = 0;
   timeLeft = 15
@@ -305,12 +306,12 @@ function setup() {
 
 
   restartButton = createButton("Restart")
-  restartButton.position(345,350)
-  restartButton.size(200,70)
-  restartButton.style("background","white")
+  restartButton.position(345, 350)
+  restartButton.size(200, 70)
+  restartButton.style("background", "white")
   restartButton.style("border-radius", "10px")
   restartButton.style("font-family", "Lexend Giga")
-  
+
 
   restartButton.mousePressed(restartQuiz);
   restartButton.hide()
@@ -321,28 +322,53 @@ function setup() {
 function drawQuestion() {
   let question = questions[currentQuestion];
   textAlign(LEFT);
-  textSize(25);
-  text(question.question, 50, 100);
+  fill(255)
+  let questionText = question.question
+
+  if (questionText.length > 60){
+    textSize(18)
+  }else if (questionText.length > 40){
+    textSize(21)
+
+  }else{
+    textSize(25)
+  }
+  text(questionText,50,100)
 
   for (let i = 0; i < 4; i++) {
     // for loop with answers
+
+    
     let answerY = 200 + i * 80;
     fill("black");
+    stroke("white");
     rect(50, answerY, 700, 60, 5);
     fill("white");
-    stroke("white");
 
+    let isHovering = mouseX > 50 && mouseX<750 && mouseY > answerY && mouseY < answerY + 60
+
+    if(isHovering){
+      rect(45,answerY - 3, 710, 66,5)
+    }else {
+      rect(50,answerY, 700,60,5)
+    }
+    
     let answerText = question.answer[i]
 
-    if(answerText.length > 55){
+    if (answerText.length > 55) {
       textSize(13)
-    }else if ( answerText.length > 35){
+    } else if (answerText.length > 35) {
       textSize(15)
-    }else {
-       textSize(18)
+    } else {
+      textSize(18)
     }
     text(answerText, 70, answerY + 38); // take one question from our array
+
+
+    
   }
+
+
   timeLeft -= deltaTime / 1000;
 
   if (timeLeft <= 0) {
@@ -351,7 +377,7 @@ function drawQuestion() {
 
     if (currentQuestion >= questions.length) {
       screen = "end";
-      
+
     } else {
       timeLeft = 15;
     }
@@ -395,7 +421,7 @@ function mousePressed() {
       currentQuestion++;
       timeLeft = 15;
 
-      if(currentQuestion >= questions.length){
+      if (currentQuestion >= questions.length) {
         screen = "end"
       }
       break
