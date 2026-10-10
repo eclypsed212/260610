@@ -258,7 +258,7 @@ function drawEndScreen() {
   text("Quiz finished", width / 2, 150);
   fill(255) 
   textSize(30);
-  text("Your score" + score + "/" + questions.length, width / 2, 250); //total scores in Endscreen
+  text("Your score:" + score + "/" + questions.length, width / 2, 250); //total scores in Endscreen
 
   textAlign(LEFT);
 }
@@ -280,7 +280,7 @@ function startQuiz() {
   screen = "quiz";
   startButton.hide();
 }
-
+//function for shuffle
 function shuffleQuestion() {
   questions.sort(() => random(-1, 1));
 
@@ -297,20 +297,34 @@ function setup() {
   textFont(myFont);
   startButton = createButton("Start");
   startButton.position(350, 350);
-  startButton.style("background", "white");
+  startButton.style("background", "#101b2d");
+  startButton.style("color","white")
+  startButton.style("border", "2px solid #398bff")
+  startButton.style("border-radius", "12px")
+  startButton.style("font-family", myFont)
+  startButton.style("font-size","16px")
+  startButton.style("font-weight","bold")
+  startButton.style("cursor", "pointer")
   startButton.style("border-radius", "10px");
   startButton.style("width", "200px");
   startButton.style("height", "70px");
-
+  startButton.style("transition", "all 0.2 ease")
   startButton.mousePressed(startQuiz); // if you pressed the button the quiz will start
 
-
+ // create restartbutton
   restartButton = createButton("Restart")
   restartButton.position(345, 350)
   restartButton.size(200, 70)
-  restartButton.style("background", "white")
+  restartButton.style("background", "#101b2d")
+  restartButton.style("color", "white")
+  restartButton.style("border",'2px solid #398bff')
+  restartButton.style("border-radius", "12px")
+  restartButton.style("transition", "all 0.2 ease")
   restartButton.style("border-radius", "10px")
-  restartButton.style("font-family", "Lexend Giga")
+  restartButton.style("font-family", myFont)
+  restartButton.style("font-size", "16px")
+  restartButton.style("font-weight","bold")
+  restartButton.style("cursor","pointer")
 
 
   restartButton.mousePressed(restartQuiz);
@@ -334,27 +348,24 @@ function drawQuestion() {
     textSize(25)
   }
   text(questionText,50,100)
-
   for (let i = 0; i < 4; i++) {
     // for loop with answers
-
-    
     let answerY = 200 + i * 80;
-    fill("black");
-    stroke("white");
-    rect(50, answerY, 700, 60, 5);
-    fill("white");
-
-    let isHovering = mouseX > 50 && mouseX<750 && mouseY > answerY && mouseY < answerY + 60
-
+  
+    let isHovering = mouseX > 50 && mouseX<750 && mouseY > answerY && mouseY < answerY + 60 //check the position of mouse 
     if(isHovering){
+      fill("black")
+      stroke("white")
       rect(45,answerY - 3, 710, 66,5)
     }else {
+      fill("black")
+      stroke("white")
       rect(50,answerY, 700,60,5)
     }
+    fill("white")
     
-    let answerText = question.answer[i]
-
+    let answerText = question.answer[i] 
+// if statement for if you have long text the program has to make smaller text 
     if (answerText.length > 55) {
       textSize(13)
     } else if (answerText.length > 35) {
@@ -368,14 +379,14 @@ function drawQuestion() {
     
   }
 
-
-  timeLeft -= deltaTime / 1000;
+//timer for current question 
+  timeLeft -= deltaTime / 1000; //subtracts the elapsed time in seconds from the timer 
 
   if (timeLeft <= 0) {
     timeLeft = 0;
     currentQuestion++;
 
-    if (currentQuestion >= questions.length) {
+    if (currentQuestion >= questions.length) { 
       screen = "end";
 
     } else {
