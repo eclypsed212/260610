@@ -326,7 +326,6 @@ function setup() {
   restartButton.style("font-weight","bold")
   restartButton.style("cursor","pointer")
 
-
   restartButton.mousePressed(restartQuiz);
   restartButton.hide()
 }
