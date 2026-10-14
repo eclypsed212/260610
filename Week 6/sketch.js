@@ -1,7 +1,48 @@
 
 let myFont;
-let rooms = ["Sleeproom","Kitchen","Playroom","Bathroom"]
 let currentRoom = 0;
+let currentFood = 0;
+let fridgeOpen = false;
+let selectFood = -1;
+
+
+let rooms = ["Sleeproom","Kitchen","Playroom","Bathroom"]
+//food
+let food = [
+  {
+   name: "Apple",
+   hunger: 10,
+},
+{
+  name:"RedBull ",
+  energy:50,
+},
+{
+  name:"Monster",
+  energy:100,
+},
+{
+  name: "BigMac",
+  hunger:60,
+},
+{
+  name: "Kiwi",
+  hunger: 15,
+},
+{
+  name: "Orange",
+  hunger: 20,
+},
+{
+  name: "Coca-Cola",
+  hunger:5,
+},
+{
+  name:"Pizza",
+  hunger: 35,
+}
+]
+//stats
 let stats = [
 
   {
@@ -23,14 +64,16 @@ let stats = [
   }
 ];
 
-
-
 function preload(){
 
 }
 function feed(){
-  stats[0].value += 20
+  if (rooms[currentRoom] === "Kitchen"){
+    stats[0].value -= 20;
+  }
 }
+
+
 function play(){
   
 }
@@ -39,8 +82,44 @@ function setup() {
   createCanvas(800, 600);
 }
 
+//kitchen settings 
+function drawFridge(){
+  fill("lightblue")
+  rect(550, 200, 120, 200, 10)
+
+  fill("gray")
+  rect(565, 215, 90, 80, 5)
+  rect(565,305,90,80,5)
+
+  fill("black")
+  rect(650,230,5,45)
+  rect(650,320,5,45)
 
 
+  fill("black")
+  textSize(14)
+  text("Click",570,420)
+}
+
+function drawFoodMenu(){
+  fill("white")
+  rect(200,100,350,350,10)
+
+  fill("black")
+  textSize(22)
+  text("Choose food:", 285,125)
+
+  for (let i = 0; i < food.length; i ++){
+    text(food[i].name, 220, 175 + i * 30)
+  }
+
+  if (selectFood !== -1){
+    fill("blue")
+    textSize(16)
+    text("Selected: " + food[selectFood].name,220,430)
+  }
+
+}
 
 function draw() {
   background("gray");
@@ -59,7 +138,17 @@ function draw() {
   }
   textSize(24)
   text(rooms[currentRoom], 20,250)
+
+  if(rooms[currentRoom] === "Kitchen"){
+    drawFridge()
+  }
+  if (fridgeOpen === true){
+    drawFoodMenu()
+  }
 }
+
+
+
 
 function keyPressed(){
   if(keyCode === RIGHT_ARROW){
@@ -69,5 +158,24 @@ function keyPressed(){
     currentRoom--;
   }
 
-  currentRoom = constain(currentRoom,0,rooms.length-1)
+  currentRoom = constrain(currentRoom,0,rooms.length-1)
+}
+function mousePressed(){
+  if(rooms[currentRoom] === "Kitchen"){
+    if(fridgeOpen === false){
+    if (mouseX > 550 && mouseX < 670 && mouseY > 200 && mouseY < 400){
+      fridgeOpen = true;
+    }
+  }else{
+   if( mouseX > 200 && mouseX < 550 && mouseY > 155 && mouseY < 415){
+    let index = floor ((mouseY - 160)/30)
+    if (index >=  0 && index < food.length){
+      selectFood = index;
+    }
+   }
+  } 
+}else{
+    fridgeOpen = false 
+
+  }
 }
