@@ -4,9 +4,10 @@ let currentRoom = 0;
 let currentFood = 0;
 let fridgeOpen = false;
 let selectFood = -1;
+let feedButton;
 
 
-let rooms = ["Sleeproom","Kitchen","Playroom","Bathroom"]
+let rooms = ["Bedroom","Kitchen","Playroom","Bathroom"]
 //food
 let food = [
   {
@@ -67,9 +68,23 @@ let stats = [
 function preload(){
 
 }
+
+
+
 function feed(){
-  if (rooms[currentRoom] === "Kitchen"){
-    stats[0].value -= 20;
+  if (rooms[currentRoom] === "Kitchen" && selectFood !== -1){
+    let selected = food[selectFood]
+
+    if(selected.hunger !== undefined){
+      stats[0].value -= selected.hunger
+    }
+    if (selected.energy !== undefined){
+      stats[1].value += selected.energy
+    }
+    stats[0].value = constrain(stats[0].value,0,100)
+    stats[1].value = constrain(stats[1].value,0,100)
+
+    selectFood = -1 
   }
 }
 
@@ -80,6 +95,14 @@ function play(){
 
 function setup() {
   createCanvas(800, 600);
+
+
+  feedButton = createButton("Feed")
+  feedButton.position(400,390)
+  feedButton.mousePressed(feed)
+  feedButton.hide()
+
+  
 }
 
 //kitchen settings 
@@ -119,6 +142,7 @@ function drawFoodMenu(){
     text("Selected: " + food[selectFood].name,220,430)
   }
 
+ 
 }
 
 function draw() {
@@ -145,6 +169,21 @@ function draw() {
   if (fridgeOpen === true){
     drawFoodMenu()
   }
+  if(fridgeOpen && selectFood !== -1){
+    feedButton.show()
+  }else{
+    feedButton.hide()
+  }
+
+  if (fridgeOpen && selectFood !== -1){
+    feedButton.show()
+
+  }else{
+    feedButton.hide()
+  }
+
+  
+
 }
 
 
