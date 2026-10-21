@@ -9,6 +9,7 @@ let sleepButton;
 let GetUpButton;
 let isSleeping  = false; 
 let cleanButton;
+let pet;
 
 let rooms = ["Bedroom", "Kitchen", "Playroom", "Bathroom"];
 //food
@@ -68,26 +69,35 @@ let stats = [
 
 
 
-function preload() {}
+function preload() {
+  pet = loadImage("assets/zxc_cat.png")
+}
 
 
 function updateStats(){
   if (isSleeping){
+    stats[0].value +=1
     stats[1].value +=5
     stats[3].value +=1
   }else{
     stats[0].value += 1
-    stats[1].value -= 1 
+    stats[2].value -= 1 
   }
   stats[0].value = constrain(stats[0].value,0,100)
   stats[1].value = constrain(stats[1].value,0,100)
+  stats[2].value = constrain(stats[2].value,0,100)
   stats[3].value = constrain(stats[3].value,0,100)
+  
   
 
 }
 function feed() {
   if (rooms[currentRoom] === "Kitchen" && selectFood !== -1) {
     let selected = food[selectFood];
+
+    if(selected.hunger !== undefined && stats[0].value <=20){
+      stats[3].value -=10
+    }
 
     if (selected.hunger !== undefined) {
       stats[0].value -= selected.hunger;
@@ -97,6 +107,7 @@ function feed() {
     }
     stats[0].value = constrain(stats[0].value, 0, 100);
     stats[1].value = constrain(stats[1].value, 0, 100);
+    stats[3].value = constrain(stats[3].value, 0, 100)
 
     selectFood = -1;
   }
@@ -140,6 +151,15 @@ function sleep(){
 }
 function getUp(){
   isSleeping = false
+
+}
+function clean(){
+  if(rooms[currentRoom] === "Bathroom"){
+    stats[3].value += 20
+    stats[3].value = constrain(stats[3].value,0,100)
+  }
+
+  
 }
 //kitchen settings
 function drawFridge() {
@@ -200,6 +220,7 @@ function draw() {
   }
   textSize(24);
   text(rooms[currentRoom], 20, 250);
+  image(pet, 300,200,150,150)
 
   if (rooms[currentRoom] === "Kitchen") {
     drawFridge();
@@ -248,18 +269,23 @@ function mousePressed() {
   if (rooms[currentRoom] !== "Kitchen") {
     return;
   }
-
-  if (fridgeOpen === false) {
-    if (mouseX > 550 && mouseX < 670 && mouseY > 200 && mouseY < 400) {
+  if (fridgeOpen === false){
+    if(mouseX > 550 && mouseX < 670 && mouseY > 200 && mouseY < 400){
       fridgeOpen = true;
     }
-  } else {
-    if (mouseX > 200 && mouseX < 550 && mouseY >= 160 && mouseY < 400) {
-      let index = floor((mouseY - 160) / 30);
+  }else {
+    if (mouseX > 550 && mouseX < 670 && mouseY > 200 && mouseY < 400){
+      fridgeOpen = false 
+      selectFood = -1
+    }
+    else if (mouseX > 200 && mouseX < 550 && mouseY >= 160 && mouseY < 400){
+      let index = floor ((mouseY - 160) / 30)
 
-      if (index >= 0 && index < food.length) {
-        selectFood = index;
+      if(index >=0 && index < food.length){
+        selectFood = index 
       }
     }
   }
+
+
 }
