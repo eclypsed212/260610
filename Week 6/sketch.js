@@ -15,6 +15,9 @@ let petHungry;
 let PetOverFed;
 let isOVerFed = false;
 let wardrobeButton;
+let bed 
+let wardrobe
+let bedroom
 
 
 let petSleepy;
@@ -29,6 +32,7 @@ let clothes = [
   loadImage("assets/cloth/dynasty_zip-hoodie.png"),
   loadImage("assets/cloth/sonic_jersey_blue.png"),
 ]
+
 let selectClothes = 0;
 
 //food
@@ -94,6 +98,9 @@ function preload() {
   petHungry = loadImage("assets/zxc_hungry.png")
   petTired = loadImage("assets/zxc_tired.png")
   PetOverFed = loadImage("assets/zxc_overfed.png")
+  bed = loadImage("assets/rooms/badroom/bed.png")
+  wardrobe = loadImage("assets/rooms/badroom/wardrobe.png")
+  bedroom = loadImage("assets/rooms/badroom/bedroom.jpg")
 }
 
 
@@ -116,6 +123,13 @@ function updateStats() {
   }
 
 
+}
+function drawBedroom(){
+  image(bedroom,0, 0, 800, 600)
+
+  image(bed, 30, 330, 320, 220)
+
+  image(wardrobe, 580, 210, 190, 340)
 }
 function feed() {
   if (rooms[currentRoom] === "Kitchen" && selectFood !== -1) {
@@ -244,12 +258,19 @@ function drawFoodMenu() {
 
 function draw() {
   background("gray");
+   if (rooms[currentRoom] === "Bedroom"){
+    drawBedroom();
+  }
+
+
+  
 
   if (millis() - lastUpdate >= 5000) {
     updateStats();
     lastUpdate = millis();
 
   }
+  
 
   for (let i = 0; i < stats.length; i++) {
     fill("gray");
@@ -278,6 +299,7 @@ function draw() {
   } else {
     image(pet, 300, 200, 150, 150);
   }
+  
 
   if (rooms[currentRoom] === "Kitchen") {
     drawFridge();
@@ -315,7 +337,7 @@ function draw() {
   }else{
     wardrobeButton.hide()
   }
-
+ 
 }
 
 function keyPressed() {
