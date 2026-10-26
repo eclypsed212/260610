@@ -15,7 +15,7 @@ let petHungry;
 let PetOverFed;
 let isOVerFed = false;
 let wardrobeButton;
-let bed 
+let bed
 let wardrobe
 let bedroom
 
@@ -27,11 +27,7 @@ let rooms = ["Bedroom", "Kitchen", "Playroom", "Bathroom"];
 
 
 let clothingMenu = false;
-let clothes = [
-  loadImage("assets/cloth/ak_longsleeve.png"),
-  loadImage("assets/cloth/dynasty_zip-hoodie.png"),
-  loadImage("assets/cloth/sonic_jersey_blue.png"),
-]
+let clothes = []
 
 let selectClothes = 0;
 
@@ -101,6 +97,12 @@ function preload() {
   bed = loadImage("assets/rooms/badroom/bed.png")
   wardrobe = loadImage("assets/rooms/badroom/wardrobe.png")
   bedroom = loadImage("assets/rooms/badroom/bedroom.jpg")
+
+  clothes = [
+    loadImage("assets/cloth/ak_longsleeve.png"),
+    loadImage("assets/cloth/dynasty_zip-hoodie.png"),
+    loadImage("assets/cloth/sonic_jersey_blue.png"),
+  ]
 }
 
 
@@ -124,8 +126,8 @@ function updateStats() {
 
 
 }
-function drawBedroom(){
-  image(bedroom,0, 0, 800, 600)
+function drawBedroom() {
+  image(bedroom, 0, 0, 800, 600)
 
   image(bed, 30, 330, 320, 220)
 
@@ -164,12 +166,7 @@ function setup() {
   feedButton.mousePressed(feed);
   feedButton.hide();
 
-  //create Sleep Button
 
-  sleepButton = createButton("Sleep")
-  sleepButton.position(400, 430)
-  sleepButton.mousePressed(sleep)
-  sleepButton.hide()
 
   //create get up button
 
@@ -186,16 +183,16 @@ function setup() {
 
   //create wardrobe button 
   wardrobeButton = createButton("Clothing")
-  wardrobeButton.position(500,250)
+  wardrobeButton.position(500, 250)
   wardrobeButton.mousePressed(clothing)
   wardrobeButton.hide()
 
-  
+
 }
 
-function clothing(){
+function clothing() {
 
-  if(rooms[currentRoom] === "Bedroom"){
+  if (rooms[currentRoom] === "Bedroom") {
     clothingMenu = !clothingMenu
   }
 }
@@ -258,19 +255,19 @@ function drawFoodMenu() {
 
 function draw() {
   background("gray");
-   if (rooms[currentRoom] === "Bedroom"){
+  if (rooms[currentRoom] === "Bedroom") {
     drawBedroom();
   }
 
 
-  
+
 
   if (millis() - lastUpdate >= 5000) {
     updateStats();
     lastUpdate = millis();
 
   }
-  
+
 
   for (let i = 0; i < stats.length; i++) {
     fill("gray");
@@ -299,7 +296,7 @@ function draw() {
   } else {
     image(pet, 300, 200, 150, 150);
   }
-  
+
 
   if (rooms[currentRoom] === "Kitchen") {
     drawFridge();
@@ -313,18 +310,6 @@ function draw() {
     feedButton.hide();
   }
 
-  if (rooms[currentRoom] === "Bedroom" && !isSleeping) {
-    sleepButton.show()
-
-  } else {
-    sleepButton.hide()
-  }
-
-  if (rooms[currentRoom] === "Bedroom" && isSleeping) {
-    GetUpButton.show()
-  } else {
-    GetUpButton.hide()
-  }
 
   if (rooms[currentRoom] === "Bathroom") {
     cleanButton.show()
@@ -332,15 +317,18 @@ function draw() {
     cleanButton.hide()
   }
 
-  if (rooms[currentRoom] === "Bedroom"){
+  if (rooms[currentRoom] === "Bedroom") {
     wardrobeButton.show()
-  }else{
+  } else {
     wardrobeButton.hide()
   }
- 
+
 }
 
 function keyPressed() {
+  if (isSleeping) {
+    return
+  }
   if (keyCode === RIGHT_ARROW) {
     currentRoom++;
   }
@@ -351,6 +339,17 @@ function keyPressed() {
   currentRoom = constrain(currentRoom, 0, rooms.length - 1);
 }
 function mousePressed() {
+
+
+  if (rooms[currentRoom] === "Bedroom") {
+    if (mouseX > 30 && mouseX < 350 && mouseY > 330 && mouseY < 550) {
+      if (isSleeping === false) {
+        sleep()
+      } else {
+        getUp()
+      }
+    }
+  }
   if (rooms[currentRoom] !== "Kitchen") {
     return;
   }
