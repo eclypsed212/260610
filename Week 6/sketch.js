@@ -14,12 +14,23 @@ let petSad;
 let petHungry;
 let PetOverFed;
 let isOVerFed = false;
+let wardrobeButton;
 
 
 let petSleepy;
 let petTired;
 
 let rooms = ["Bedroom", "Kitchen", "Playroom", "Bathroom"];
+
+
+let clothingMenu = false;
+let clothes = [
+  loadImage("assets/cloth/ak_longsleeve.png"),
+  loadImage("assets/cloth/dynasty_zip-hoodie.png"),
+  loadImage("assets/cloth/sonic_jersey_blue.png"),
+]
+let selectClothes = 0;
+
 //food
 let food = [
   {
@@ -158,6 +169,21 @@ function setup() {
   cleanButton.position(400, 430)
   cleanButton.mousePressed(clean)
   cleanButton.hide()
+
+  //create wardrobe button 
+  wardrobeButton = createButton("Clothing")
+  wardrobeButton.position(500,250)
+  wardrobeButton.mousePressed(clothing)
+  wardrobeButton.hide()
+
+  
+}
+
+function clothing(){
+
+  if(rooms[currentRoom] === "Bedroom"){
+    clothingMenu = !clothingMenu
+  }
 }
 
 function sleep() {
@@ -177,6 +203,8 @@ function clean() {
 
 
 }
+
+
 //kitchen settings
 function drawFridge() {
   fill("lightblue");
@@ -280,6 +308,12 @@ function draw() {
     cleanButton.show()
   } else {
     cleanButton.hide()
+  }
+
+  if (rooms[currentRoom] === "Bedroom"){
+    wardrobeButton.show()
+  }else{
+    wardrobeButton.hide()
   }
 
 }
