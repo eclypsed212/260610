@@ -16,6 +16,7 @@ let PetOverFed;
 let isOVerFed = false;
 let wardrobeButton;
 let bed
+let sleepingBed
 let wardrobe
 let bedroom
 
@@ -28,8 +29,9 @@ let rooms = ["Bedroom", "Kitchen", "Playroom", "Bathroom"];
 
 let clothingMenu = false;
 let clothes = []
+let skins = []
 
-let selectClothes = 0;
+let selectClothes = -1;
 
 //food
 let food = [
@@ -97,12 +99,45 @@ function preload() {
   bed = loadImage("assets/rooms/badroom/bed.png")
   wardrobe = loadImage("assets/rooms/badroom/wardrobe.png")
   bedroom = loadImage("assets/rooms/badroom/bedroom.jpg")
+  sleepingBed = loadImage("assets/rooms/badroom/sleeping_bed.png")
 
   clothes = [
+    loadImage("assets/cloth/sonic_jersey_blue.png"),
     loadImage("assets/cloth/ak_longsleeve.png"),
     loadImage("assets/cloth/dynasty_zip-hoodie.png"),
-    loadImage("assets/cloth/sonic_jersey_blue.png"),
   ]
+
+  skins = [
+    {
+      normal: loadImage("assets/skins/jersey/normal.png"),
+      sad: loadImage("assets/skins/jersey/sad.png"),
+      hungry: loadImage("assets/skins/jersey/hungry.png"),
+      overfed: loadImage("assets/skins/jersey/overfeed.png"),
+      tired: loadImage("assets/skins/jersey/tired.png")
+    },
+
+    {
+      normal: loadImage("assets/skins/ak/normal.png"),
+      sad: loadImage("assets/skins/ak/sad.png"),
+      hungry: loadImage("assets/skins/ak/hungry.png"),
+      overfed: loadImage("assets/skins/ak/overfeed.png"),
+      tired: loadImage("assets/skins/ak/tired.png")
+
+
+    },
+    {
+      normal: loadImage("assets/skins/zip_hoodie/normal.png"),
+      sad: loadImage("assets/skins/zip_hoodie/sad.png"),
+      hungry: loadImage("assets/skins/zip_hoodie/hungry.png"),
+      overfed: loadImage("assets/skins/zip_hoodie/overfeed.png"),
+      tired: loadImage("assets/skins/zip_hoodie/tired.png")
+
+
+    }
+
+  ]
+
+
 }
 
 
@@ -129,8 +164,11 @@ function updateStats() {
 function drawBedroom() {
   image(bedroom, 0, 0, 800, 600)
 
-  image(bed, 30, 330, 320, 220)
-
+  if (isSleeping) {
+    image(sleepingBed, 30, 330, 320, 220)
+  } else {
+    image(bed, 30, 330, 320, 220)
+  }
   image(wardrobe, 580, 210, 190, 340)
 }
 function feed() {
@@ -181,13 +219,28 @@ function setup() {
   cleanButton.mousePressed(clean)
   cleanButton.hide()
 
-  //create wardrobe button 
-  wardrobeButton = createButton("Clothing")
-  wardrobeButton.position(500, 250)
-  wardrobeButton.mousePressed(clothing)
-  wardrobeButton.hide()
+}
 
+function drawClothingMenu() {
+  fill("white")
+  rect(200, 100, 350, 350, 10)
+  fill("black")
+  textSize(22)
+  text("Choose clothes:", 220, 135)
+  for (let i = 0; i < clothes.length; i++) {
+    image(clothes[i], 230 + i * 100, 200, 80, 100)
 
+  }
+  textSize(16)
+
+  text("Click an outfit to select", 220, 400)
+
+  fill("lightgray")
+  rect(220, 340, 120, 40, 8)
+
+  fill("black")
+  textSize(18)
+  text("Default", 245, 366)
 }
 
 function clothing() {
@@ -253,6 +306,37 @@ function drawFoodMenu() {
   }
 }
 
+
+function getPetImage() {
+  let emotion = "normal"
+
+  if (isOVerFed) {
+    emotion = "overfed"
+  } else if (stats[2].value <= 35) {
+    emotion = "sad"
+  } else if (stats[0].value >= 65) {
+    emotion = "hungry"
+  } else if (stats[1].value <= 30) {
+    emotion = "tired"
+  };
+
+
+
+  let defaultImages = {
+    normal: pet,
+    sad: petSad,
+    hungry: petHungry,
+    tired: petTired,
+    overfed: PetOverFed
+  }
+
+  if (selectClothes === -1) {
+    return defaultImages[emotion]
+  }
+
+  return skins[selectClothes][emotion] || defaultImages[emotion]
+}
+
 function draw() {
   background("gray");
   if (rooms[currentRoom] === "Bedroom") {
@@ -283,19 +367,12 @@ function draw() {
   textSize(24);
   text(rooms[currentRoom], 20, 250);
 
-
-
-  if (isOVerFed) {
-    image(PetOverFed, 300, 200, 150, 150);
-  } else if (stats[2].value <= 35) {
-    image(petSad, 300, 200, 150, 150);
-  } else if (stats[0].value >= 65) {
-    image(petHungry, 300, 200, 150, 150);
-  } else if (stats[1].value <= 30) {
-    image(petTired, 300, 200, 150, 150);
-  } else {
-    image(pet, 300, 200, 150, 150);
+  if (!isSleeping){
+    image(getPetImage(), 300, 200, 150,150)
   }
+
+  
+
 
 
   if (rooms[currentRoom] === "Kitchen") {
@@ -317,11 +394,11 @@ function draw() {
     cleanButton.hide()
   }
 
-  if (rooms[currentRoom] === "Bedroom") {
-    wardrobeButton.show()
-  } else {
-    wardrobeButton.hide()
+  if (rooms[currentRoom] === "Bedroom" && clothingMenu) {
+    drawClothingMenu()
   }
+
+
 
 }
 
@@ -341,6 +418,25 @@ function keyPressed() {
 function mousePressed() {
 
 
+  if (clothingMenu && rooms[currentRoom] === "Bedroom") {
+
+    if (mouseX > 220 && mouseX < 340 && mouseY > 340 && mouseY < 380){
+      selectClothes = -1
+      clothingMenu = false 
+      return
+    }
+    for (let i = 0; i < clothes.length; i++) {
+      let x = 230 + i * 100
+
+      if (mouseX > x && mouseX < x + 80 && mouseY > 200 && mouseY < 300) {
+        selectClothes = i;
+        clothingMenu = false
+        return
+      }
+    }
+    return
+  }
+
   if (rooms[currentRoom] === "Bedroom") {
     if (mouseX > 30 && mouseX < 350 && mouseY > 330 && mouseY < 550) {
       if (isSleeping === false) {
@@ -348,6 +444,13 @@ function mousePressed() {
       } else {
         getUp()
       }
+    }
+  }
+  
+
+  if (rooms[currentRoom] === "Bedroom") {
+    if (mouseX > 580 && mouseX < 770 && mouseY > 210 && mouseY < 550) {
+      clothing()
     }
   }
   if (rooms[currentRoom] !== "Kitchen") {
