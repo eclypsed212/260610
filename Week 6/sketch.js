@@ -20,6 +20,17 @@ let sleepingBed
 let wardrobe
 let bedroom
 
+let isBathing = false
+let bathStartTime = 0
+let bathroom
+let bath
+let bathingImage
+
+let kitchenClosed
+let kitchenOpen
+let foodMenuOpen = false
+
+
 
 let petSleepy;
 let petTired;
@@ -32,6 +43,8 @@ let clothes = []
 let skins = []
 
 let selectClothes = -1;
+
+let foodImages = []
 
 //food
 let food = [
@@ -67,6 +80,11 @@ let food = [
     name: "Pizza",
     hunger: 35,
   },
+
+  {
+    name: "Pepper",
+    hunger: 10,
+  }
 ];
 //stats
 let stats = [
@@ -100,6 +118,12 @@ function preload() {
   wardrobe = loadImage("assets/rooms/badroom/wardrobe.png")
   bedroom = loadImage("assets/rooms/badroom/bedroom.jpg")
   sleepingBed = loadImage("assets/rooms/badroom/sleeping_bed.png")
+  bathroom = loadImage("assets/rooms/bathroom/bathroom.png")
+  bath = loadImage("assets/rooms/bathroom/bath.png")
+  bathingImage = loadImage("assets/rooms/bathroom/isBathing.png")
+  kitchenClosed = loadImage("assets/rooms/kitchen/kitchen_close.png")
+  kitchenOpen = loadImage("assets/rooms/kitchen/kitchen_open.png")
+
 
   clothes = [
     loadImage("assets/cloth/sonic_jersey_blue.png"),
@@ -137,6 +161,20 @@ function preload() {
 
   ]
 
+  foodImages = [
+    loadImage("assets/food/apple.png"),
+    loadImage("assets/food/redbull.png"),
+    loadImage("assets/food/monster.png"),
+    loadImage("assets/food/bigmac.png"),
+    loadImage("assets/food/kiwi.png"),
+    loadImage("assets/food/orange.png"),
+    loadImage("assets/food/cola.jpg"),
+    loadImage("assets/food/pizza.png"),
+    loadImage("assets/food/peper.png"),
+  ]
+
+
+
 
 }
 
@@ -161,6 +199,24 @@ function updateStats() {
 
 
 }
+
+function drawBathroom() {
+  image(bathroom, 0, 0, 800, 600)
+
+  if (isBathing) {
+    image(bathingImage, 180, 250, 340, 220)
+  } else {
+    image(bath, 180, 270, 340, 220)
+  }
+}
+
+function startBath() {
+  if (!isBathing) {
+    isBathing = true
+    bathStartTime = millis()
+  }
+}
+
 function drawBedroom() {
   image(bedroom, 0, 0, 800, 600)
 
@@ -200,7 +256,7 @@ function setup() {
   createCanvas(800, 600);
   //create feedButton 
   feedButton = createButton("Feed");
-  feedButton.position(400, 390);
+  feedButton.position(400, 455);
   feedButton.mousePressed(feed);
   feedButton.hide();
 
@@ -270,40 +326,64 @@ function clean() {
 
 
 //kitchen settings
-function drawFridge() {
-  fill("lightblue");
-  rect(550, 200, 120, 200, 10);
+function drawKitchen() {
+  if (fridgeOpen) {
+    image(kitchenOpen, 0, 0, 800, 600)
+  } else {
+    image(kitchenClosed, 0, 0, 800, 600)
 
-  fill("gray");
-  rect(565, 215, 90, 80, 5);
-  rect(565, 305, 90, 80, 5);
+  }
 
-  fill("black");
-  rect(650, 230, 5, 45);
-  rect(650, 320, 5, 45);
-
-  fill("black");
-  textSize(14);
-  text("Click", 570, 420);
 }
 
 function drawFoodMenu() {
-  fill("white");
-  rect(200, 100, 350, 350, 10);
+  fill(25, 25, 30, 245)
+  stroke(190, 145, 85)
+  strokeWeight(3)
+  rect(185, 65, 430, 480, 18)
+  noStroke()
+  fill(255)
+  textSize(25)
+  textAlign(CENTER)
+  text("Choose food", 400, 100)
+  fill(80, 45, 45)
+  rect(565, 75, 35, 35, 8)
+  fill(255)
+  textSize(22)
+  text("X", 582, 100)
 
-  fill("black");
-  textSize(22);
-  text("Choose food:", 285, 125);
+  for (let i = 0; i < foodImages.length; i++) {
+    let col = i % 3
+    let row = floor(i / 3)
 
-  for (let i = 0; i < food.length; i++) {
-    text(food[i].name, 220, 175 + i * 30);
+    let x = 210 + col * 135
+    let y = 125 + row * 105
+  
+  if (selectFood === i) {
+    fill(115, 85, 40)
+    stroke(255, 205, 110)
+    strokeWeight(3)
+  } else {
+    fill(45, 45, 50)
+    stroke(90)
+    strokeWeight(1)
   }
 
-  if (selectFood !== -1) {
-    fill("blue");
-    textSize(16);
-    text("Selected: " + food[selectFood].name, 220, 430);
-  }
+  rect(x, y, 110, 95, 12)
+  noStroke()
+  image(foodImages[i], x + 15, y + 5, 80, 80)
+}
+fill(255)
+textSize(17)
+
+if(selectFood !== -1){
+  text("Selected: " + food[selectFood].name, 400,475)
+}else{
+  text("Select a product", 400,475)
+}
+
+textAlign(LEFT)
+noStroke()
 }
 
 
@@ -343,14 +423,26 @@ function draw() {
     drawBedroom();
   }
 
-
-
+  if (rooms[currentRoom] === "Kitchen") {
+    drawKitchen();
+  }
 
   if (millis() - lastUpdate >= 5000) {
     updateStats();
     lastUpdate = millis();
 
   }
+
+  if (isBathing && millis() - bathStartTime >= 5000) {
+    isBathing = false;
+    stats[3].value = constrain(stats[3].value + 20, 0, 100)
+  }
+
+  if (rooms[currentRoom] === "Bathroom") {
+    drawBathroom()
+  }
+
+
 
 
   for (let i = 0; i < stats.length; i++) {
@@ -367,32 +459,35 @@ function draw() {
   textSize(24);
   text(rooms[currentRoom], 20, 250);
 
-  if (!isSleeping){
-    image(getPetImage(), 300, 200, 150,150)
+  if (!isSleeping && !isBathing) {
+    image(getPetImage(), 300, 200, 150, 150)
   }
 
-  
-
-
-
-  if (rooms[currentRoom] === "Kitchen") {
-    drawFridge();
+  if (rooms[currentRoom] === "Kitchen" && foodMenuOpen) {
+    drawFoodMenu()
   }
-  if (fridgeOpen === true) {
-    drawFoodMenu();
-  }
-  if (fridgeOpen && selectFood !== -1) {
-    feedButton.show();
+
+
+
+
+
+
+
+
+  //if (fridgeOpen === true) {
+  //drawFoodMenu();
+  //}
+
+
+
+  if (rooms[currentRoom] === "Kitchen" && foodMenuOpen && selectFood !== -1) {
+    feedButton.show()
   } else {
-    feedButton.hide();
+    feedButton.hide()
   }
 
+  cleanButton.hide()
 
-  if (rooms[currentRoom] === "Bathroom") {
-    cleanButton.show()
-  } else {
-    cleanButton.hide()
-  }
 
   if (rooms[currentRoom] === "Bedroom" && clothingMenu) {
     drawClothingMenu()
@@ -403,7 +498,7 @@ function draw() {
 }
 
 function keyPressed() {
-  if (isSleeping) {
+  if (isSleeping || isBathing) {
     return
   }
   if (keyCode === RIGHT_ARROW) {
@@ -414,15 +509,27 @@ function keyPressed() {
   }
 
   currentRoom = constrain(currentRoom, 0, rooms.length - 1);
-}
-function mousePressed() {
 
+  if (rooms[currentRoom] !== "Kitchen") {
+    fridgeOpen = false
+    foodMenuOpen = false
+    selectFood = -1
+  }
+}
+
+function mousePressed() {
+  if (rooms[currentRoom] === "Bathroom") {
+    if (mouseX > 180 && mouseX < 520 && mouseY > 270 && mouseY < 490) {
+      startBath();
+    }
+    return
+  }
 
   if (clothingMenu && rooms[currentRoom] === "Bedroom") {
 
-    if (mouseX > 220 && mouseX < 340 && mouseY > 340 && mouseY < 380){
+    if (mouseX > 220 && mouseX < 340 && mouseY > 340 && mouseY < 380) {
       selectClothes = -1
-      clothingMenu = false 
+      clothingMenu = false
       return
     }
     for (let i = 0; i < clothes.length; i++) {
@@ -446,33 +553,58 @@ function mousePressed() {
       }
     }
   }
-  
 
   if (rooms[currentRoom] === "Bedroom") {
     if (mouseX > 580 && mouseX < 770 && mouseY > 210 && mouseY < 550) {
       clothing()
     }
   }
-  if (rooms[currentRoom] !== "Kitchen") {
-    return;
-  }
-  if (fridgeOpen === false) {
-    if (mouseX > 550 && mouseX < 670 && mouseY > 200 && mouseY < 400) {
-      fridgeOpen = true;
-    }
-  } else {
-    if (mouseX > 550 && mouseX < 670 && mouseY > 200 && mouseY < 400) {
-      fridgeOpen = false
-      selectFood = -1
-    }
-    else if (mouseX > 200 && mouseX < 550 && mouseY >= 160 && mouseY < 400) {
-      let index = floor((mouseY - 160) / 30)
+  if (rooms[currentRoom] === "Kitchen") {
 
-      if (index >= 0 && index < food.length) {
-        selectFood = index
+  // Если меню с продуктами открыто
+  if (foodMenuOpen) {
+
+    // Нажатие на X закрывает меню
+    if (mouseX > 565 && mouseX < 600 &&
+        mouseY > 75 && mouseY < 110) {
+      foodMenuOpen = false;
+      selectFood = -1;
+      return;
+    }
+
+  
+    for (let i = 0; i < foodImages.length; i++) {
+      let col = i % 3;
+      let row = floor(i / 3);
+
+      let x = 210 + col * 135;
+      let y = 125 + row * 105;
+
+      if (mouseX > x && mouseX < x + 110 &&
+          mouseY > y && mouseY < y + 95) {
+        selectFood = i;
+        return;
       }
     }
+
+    return;
   }
 
+ 
+  if (mouseX > 10 && mouseX < 270 &&
+      mouseY > 90 && mouseY < 460) {
+
+    if (!fridgeOpen) {
+      fridgeOpen = true;
+    } else {
+      foodMenuOpen = true;
+    }
+  }
+
+  return;
+}
 
 }
+
+
+
