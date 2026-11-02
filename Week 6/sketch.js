@@ -681,7 +681,7 @@ function mousePressed() {
 
     return;
   }
-
+//pproblem hier window of minigame is not working 
   if (rooms[currentRoom] === "Playroom" && !minigameOpen){
     if(mouseX > 375 && mouseX < 575 && mouseY > 180 && mouseY < 330){
       minigameOpen = true
