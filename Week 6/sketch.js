@@ -6,9 +6,7 @@ let selectFood = -1;
 let feedButton;
 let lastUpdate = 0;
 let sleepButton;
-let GetUpButton;
 let isSleeping = false;
-let cleanButton;
 let pet;
 let petSad;
 let petHungry;
@@ -19,6 +17,18 @@ let bed
 let sleepingBed
 let wardrobe
 let bedroom
+let carpet
+
+
+let playroom
+let jbl
+let music
+let musicPlaying = false
+let pc
+let monitor
+let keyboard
+let chair
+let minigameOpen
 
 let isBathing = false
 let bathStartTime = 0
@@ -123,6 +133,21 @@ function preload() {
   bathingImage = loadImage("assets/rooms/bathroom/isBathing.png")
   kitchenClosed = loadImage("assets/rooms/kitchen/kitchen_close.png")
   kitchenOpen = loadImage("assets/rooms/kitchen/kitchen_open.png")
+  playroom = loadImage("assets/rooms/Playroom/playroom.png")
+  jbl = loadImage("assets/rooms/Playroom/jbl.png")
+  carpet = loadImage("assets/rooms/badroom/carpet.png")
+  pc = loadImage("assets/rooms/Playroom/pc.png")
+  monitor = loadImage("assets/rooms/Playroom/monitor.png")
+  keyboard = loadImage("assets/rooms/Playroom/keyboard.png")
+  chair = loadImage("assets/rooms/Playroom/chair.png")
+
+
+
+  music = loadSound("assets/rooms/Playroom/music/interworld -metamorphosis.mp3")
+
+
+
+
 
 
   clothes = [
@@ -163,7 +188,7 @@ function preload() {
 
   foodImages = [
     loadImage("assets/food/apple.png"),
-    loadImage("assets/food/redbull.png"),
+    loadImage("assets/food/redbull.jpg"),
     loadImage("assets/food/monster.png"),
     loadImage("assets/food/bigmac.png"),
     loadImage("assets/food/kiwi.png"),
@@ -186,6 +211,7 @@ function updateStats() {
     stats[3].value += 1
   } else {
     stats[0].value += 1
+    stats[1].value -= 1
     stats[2].value -= 1
   }
   stats[0].value = constrain(stats[0].value, 0, 100)
@@ -218,14 +244,18 @@ function startBath() {
 }
 
 function drawBedroom() {
+
   image(bedroom, 0, 0, 800, 600)
+  image(carpet, 200, 476, 480, 120)
+
 
   if (isSleeping) {
     image(sleepingBed, 30, 330, 320, 220)
   } else {
     image(bed, 30, 330, 320, 220)
   }
-  image(wardrobe, 580, 210, 190, 340)
+  image(wardrobe, 500, 210, 300, 340)
+
 }
 function feed() {
   if (rooms[currentRoom] === "Kitchen" && selectFood !== -1) {
@@ -238,6 +268,7 @@ function feed() {
 
     if (selected.hunger !== undefined) {
       stats[0].value -= selected.hunger;
+      stats[1].value = constrain(stats[1].value + 5, 0, 100)
     }
     if (selected.energy !== undefined) {
       stats[1].value += selected.energy;
@@ -256,24 +287,58 @@ function setup() {
   createCanvas(800, 600);
   //create feedButton 
   feedButton = createButton("Feed");
-  feedButton.position(400, 455);
+  feedButton.position(355, 495);
+  feedButton.size(90, 40)
+  feedButton.style("background-color", "#34302a")
+  feedButton.style("color", "#f4d39b")
+  feedButton.style("border", "2px solid #d4a65c")
+  feedButton.style("border-radius", "12px")
+  feedButton.style("font-size", "16px")
+  feedButton.style("font-weight", "bold")
+  feedButton.style("letter-spacing", "2px")
+  feedButton.style("cursor", "pointer")
+  feedButton.style("transition", "all 0.2s ease")
+
   feedButton.mousePressed(feed);
   feedButton.hide();
 
+  feedButton.mouseOver(() => {
+    feedButton.style("background-color", "#d4a65c")
+    feedButton.style("color", "#202024")
+    feedButton.style("transform", "scale(1.08)")
+    feedButton.style("box-shadow", "0 0 15px #d4a65c66")
+  });
 
+  feedButton.mouseOut(() => {
+    feedButton.style("background-color", "#34302a");
+    feedButton.style("color", "#f4d49b");
+    feedButton.style("transform", "scale(1)");
+    feedButton.style("box-shadow", "none")
 
-  //create get up button
+  })
 
-  GetUpButton = createButton("Get up")
-  GetUpButton.position(400, 430)
-  GetUpButton.mousePressed(getUp)
-  GetUpButton.hide()
+}
 
-  //create clean button 
-  cleanButton = createButton("Clean")
-  cleanButton.position(400, 430)
-  cleanButton.mousePressed(clean)
-  cleanButton.hide()
+function drawPlayroom() {
+  image(playroom, 0, 0, 800, 600)
+  image(jbl, 200, 170, 90, 50)
+  image(pc, 500, 250, 120, 150)
+  image(keyboard, 450, 420, 150, 50)
+  image(chair, 520, 400, 210, 190)
+  image(monitor, 375, 180, 200, 150)
+}
+function drawMinigame() {
+  background(25, 25, 35)
+  fill(255)
+  textAlign(CENTER)
+  textSize(35)
+  text("CAR GAME", 400, 150)
+
+  textSize(20)
+  text("Coming soon...", 400, 300)
+  textSize(16)
+  text("Press ESC to exit", 400, 500)
+  textAlign(LEFT)
 
 }
 
@@ -358,32 +423,32 @@ function drawFoodMenu() {
 
     let x = 210 + col * 135
     let y = 125 + row * 105
-  
-  if (selectFood === i) {
-    fill(115, 85, 40)
-    stroke(255, 205, 110)
-    strokeWeight(3)
+
+    if (selectFood === i) {
+      fill(115, 85, 40)
+      stroke(255, 205, 110)
+      strokeWeight(3)
+    } else {
+      fill(45, 45, 50)
+      stroke(90)
+      strokeWeight(1)
+    }
+
+    rect(x, y, 110, 95, 12)
+    noStroke()
+    image(foodImages[i], x + 15, y + 5, 80, 80)
+  }
+  fill(255)
+  textSize(17)
+
+  if (selectFood !== -1) {
+    text("Selected: " + food[selectFood].name, 400, 475)
   } else {
-    fill(45, 45, 50)
-    stroke(90)
-    strokeWeight(1)
+    text("Select a product", 400, 475)
   }
 
-  rect(x, y, 110, 95, 12)
+  textAlign(LEFT)
   noStroke()
-  image(foodImages[i], x + 15, y + 5, 80, 80)
-}
-fill(255)
-textSize(17)
-
-if(selectFood !== -1){
-  text("Selected: " + food[selectFood].name, 400,475)
-}else{
-  text("Select a product", 400,475)
-}
-
-textAlign(LEFT)
-noStroke()
 }
 
 
@@ -442,6 +507,10 @@ function draw() {
     drawBathroom()
   }
 
+  if (rooms[currentRoom] === "Playroom") {
+    drawPlayroom()
+  }
+
 
 
 
@@ -486,11 +555,15 @@ function draw() {
     feedButton.hide()
   }
 
-  cleanButton.hide()
 
 
   if (rooms[currentRoom] === "Bedroom" && clothingMenu) {
     drawClothingMenu()
+  }
+
+  if (minigameOpen){
+    drawMinigame()
+    return
   }
 
 
@@ -514,6 +587,11 @@ function keyPressed() {
     fridgeOpen = false
     foodMenuOpen = false
     selectFood = -1
+  }
+
+  if (rooms[currentRoom] !== "Playroom" && musicPlaying) {
+    music.pause()
+    musicPlaying = false
   }
 }
 
@@ -561,48 +639,69 @@ function mousePressed() {
   }
   if (rooms[currentRoom] === "Kitchen") {
 
-  // Если меню с продуктами открыто
-  if (foodMenuOpen) {
+    // Если меню с продуктами открыто
+    if (foodMenuOpen) {
 
-    // Нажатие на X закрывает меню
-    if (mouseX > 565 && mouseX < 600 &&
+      // Нажатие на X закрывает меню
+      if (mouseX > 565 && mouseX < 600 &&
         mouseY > 75 && mouseY < 110) {
-      foodMenuOpen = false;
-      selectFood = -1;
+        foodMenuOpen = false;
+        selectFood = -1;
+        return;
+      }
+
+
+      for (let i = 0; i < foodImages.length; i++) {
+        let col = i % 3;
+        let row = floor(i / 3);
+
+        let x = 210 + col * 135;
+        let y = 125 + row * 105;
+
+        if (mouseX > x && mouseX < x + 110 &&
+          mouseY > y && mouseY < y + 95) {
+          selectFood = i;
+          return;
+        }
+      }
+
       return;
     }
 
-  
-    for (let i = 0; i < foodImages.length; i++) {
-      let col = i % 3;
-      let row = floor(i / 3);
 
-      let x = 210 + col * 135;
-      let y = 125 + row * 105;
+    if (mouseX > 10 && mouseX < 270 &&
+      mouseY > 90 && mouseY < 460) {
 
-      if (mouseX > x && mouseX < x + 110 &&
-          mouseY > y && mouseY < y + 95) {
-        selectFood = i;
-        return;
+      if (!fridgeOpen) {
+        fridgeOpen = true;
+      } else {
+        foodMenuOpen = true;
       }
     }
 
     return;
   }
 
- 
-  if (mouseX > 10 && mouseX < 270 &&
-      mouseY > 90 && mouseY < 460) {
-
-    if (!fridgeOpen) {
-      fridgeOpen = true;
-    } else {
-      foodMenuOpen = true;
+  if (rooms[currentRoom] === "Playroom" && !minigameOpen){
+    if(mouseX > 375 && mouseX < 575 && mouseY > 180 && mouseY < 330){
+      minigameOpen = true
+      return
     }
   }
 
-  return;
-}
+
+  if (rooms[currentRoom] === "Playroom") {
+    if (mouseX > 200 && mouseX < 290 && mouseY > 170 && mouseY < 220) {
+      if (musicPlaying) {
+        music.pause()
+        musicPlaying = false
+      } else {
+        music.loop()
+        musicPlaying = true
+      }
+      return
+    }
+  }
 
 }
 
